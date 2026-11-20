@@ -2,8 +2,9 @@
 import urllib.request
 import json
 import re
-from html.parser import HTMLParser
+import time
 from html import unescape
+from html.parser import HTMLParser
 from datetime import datetime, timezone, timedelta
 
 BASE = "https://www.bleague.jp"
@@ -38,39 +39,168 @@ def clean(value):
     return unescape(re.sub(r"<[^>]+>", "", value)).strip()
 
 
-def get_schedule():
-    html = fetch(BASE + "/schedule/")
-    games = []
+def get_month_dates(year, month):
+    url = (
+        f"{BASE}/schedule/?year={year}&mon={month:02d}"
+        "&day=01&event=2&club=&tab=1&ha=&fb="
+    )
 
-    pattern = re.compile(
-        r'<li class="list-item" id="([^"]+)">(.*?)</li>',
+    html = fetch(url)
+
+    days = sorted(set(
+        re.findall(r'data-day="(\d+)"', html)
+    ))
+
+    return [
+        f"{year}-{month:02d}-{int(day):02d}"
+        for day in days
+    ]
+
+
+def parse_game(card, game_date, game_id):
+    teams = re.findall(
+        r'<span class="team-name">(.*?)</span>',
+        card,
         re.S
     )
 
-    for match in pattern.finditer(html):
-        game_id = match.group(1)
-        card = match.group(2)
+    if len(teams) < 2:
+        return None
 
-        teams = re.findall(
-            r'<span class="team-name">(.*?)</span>',
-            card,
-            re.S
+    home_score = re.search(
+        r'class="number home-score[^"]*"[^>]*>\s*<span>(.*?)</span>',
+        card,
+        re.S
+    )
+
+    away_score = re.search(
+        r'class="number away-score[^"]*"[^>]*>\s*<span>(.*?)</span>',
+        card,
+        re.S
+    )
+
+    arena = re.search(
+        r'<div class="info-arena">(.*?)</div>',
+        card,
+        re.S
+    )
+
+    arena_parts = (
+        text_content(arena.group(1))
+        if arena else []
+    )
+
+    status_match = re.search(
+        r'<div class="info-scorestate">(.*?)</div>',
+        card,
+        re.S
+    )
+
+    status = (
+        " ".join(text_content(status_match.group(1)))
+        if status_match else "試合予定"
+    )
+
+    link = re.search(
+        r'<a class="data-game[^"]*"[^>]*href="([^"]+)"',
+        card,
+        re.S
+    )
+
+    detail = (
+        unescape(link.group(1))
+        if link else f"/game_detail/?ScheduleKey={game_id}"
+    )
+
+    if detail.startswith("/"):
+        detail = BASE + detail
+
+    return {
+        "id": game_id,
+        "date": game_date,
+        "home": clean(teams[0]),
+        "away": clean(teams[1]),
+        "homeScore": clean(home_score.group(1)) if home_score else "",
+        "awayScore": clean(away_score.group(1)) if away_score else "",
+        "venue": arena_parts[0] if arena_parts else "",
+        "time": arena_parts[-1] if len(arena_parts) >= 2 else "",
+        "status": status,
+        "info": text_content(card),
+        "detail": detail
+    }
+
+
+def get_day_games(game_date):
+    year, month, day = game_date.split("-")
+
+    url = (
+        f"{BASE}/schedule/?data_format=json"
+        f"&year={year}&mon={int(month)}&day={int(day)}"
+        "&event=2&club=&tab=1&ha=&fb=&index=20"
+    )
+
+    try:
+        data = json.loads(fetch(url))
+    except Exception as error:
+        print("取得エラー:", game_date, error)
+        return []
+
+    games = []
+
+    for card in data.get("topics", []):
+        id_match = re.search(
+            r'<li class="list-item" id="([^"]+)"',
+            card
         )
 
-        if len(teams) < 2:
+        if not id_match:
             continue
 
-        info = text_content(card)
+        game = parse_game(
+            card,
+            game_date,
+            id_match.group(1)
+        )
 
-        games.append({
-            "id": game_id,
-            "home": clean(teams[0]),
-            "away": clean(teams[1]),
-            "info": info,
-            "detail": BASE + "/game_detail/?ScheduleKey=" + game_id
-        })
+        if game:
+            games.append(game)
 
     return games
+
+
+def get_schedule():
+    all_games = {}
+    months = [
+        (2026, month) for month in range(9, 13)
+    ] + [
+        (2027, month) for month in range(1, 6)
+    ]
+
+    for year, month in months:
+        print(f"{year}年{month}月の開催日を確認中...")
+
+        try:
+            dates = get_month_dates(year, month)
+        except Exception as error:
+            print("月の取得エラー:", error)
+            continue
+
+        for game_date in dates:
+            games = get_day_games(game_date)
+
+            for game in games:
+                all_games[game["id"]] = game
+
+            print(
+                f"  {game_date}: {len(games)}試合"
+            )
+
+            time.sleep(0.2)
+
+    result = list(all_games.values())
+    result.sort(key=lambda g: (g["date"], g["time"]))
+
+    return result
 
 
 def get_standings():
@@ -132,7 +262,7 @@ def get_standings():
 
 
 def main():
-    print("B.PREMIERの公式データを取得しています...")
+    print("B.PREMIER公式データを取得します...")
 
     schedule = get_schedule()
     standings = get_standings()
@@ -149,7 +279,7 @@ def main():
     with open("data.json", "w", encoding="utf-8") as file:
         json.dump(result, file, ensure_ascii=False, indent=2)
 
-    print("取得完了！")
+    print("\n取得完了！")
     print("試合データ:", len(schedule), "件")
     print("東地区:", len(standings.get("東地区", [])), "チーム")
     print("西地区:", len(standings.get("西地区", [])), "チーム")
