@@ -308,7 +308,8 @@ main {
   outline:none;
 }
 
-.filter-reset {
+.filter-reset,
+.back-button {
   border:0;
   background:var(--yellow);
   color:var(--navy);
@@ -317,6 +318,10 @@ main {
   font-size:11px;
   font-weight:900;
   cursor:pointer;
+}
+
+.back-button {
+  margin-bottom:18px;
 }
 
 .table-wrap {
@@ -997,6 +1002,7 @@ footer {
   <button onclick="showPage('standings',this)">STANDINGS</button>
   <button onclick="showPage('teams',this)">TEAMS</button>
   <button onclick="showPage('compare',this)">COMPARE</button>
+  <button onclick="showPage('restDays',this)">REST DAYS</button>
 </nav>
 
 <main>
@@ -1137,12 +1143,52 @@ footer {
   <div id="compareContent"></div>
 </section>
 
+<section id="restDays" class="page">
+  <div class="page-heading">
+    <h1>REST DAYS STATS</h1>
+    <p class="subtitle">休養日数別の全チーム勝率・得失点</p>
+  </div>
+
+  <div class="schedule-filter">
+    <label for="restDayFilter">🛌 休養日数を選択</label>
+    <select id="restDayFilter" onchange="renderRestDays()">
+      <option value="中1日" selected>中1日</option>
+      <option value="中0日(連戦)">中0日(連戦)</option>
+      <option value="中2日">中2日</option>
+      <option value="中3〜4日">中3〜4日</option>
+      <option value="中5日以上">中5日以上</option>
+      <option value="開幕戦/初戦">開幕戦/初戦</option>
+    </select>
+    <button class="filter-reset" onclick="document.getElementById('restDayFilter').value='中1日';renderRestDays();">中1日に戻す</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>順位</th>
+          <th>チーム</th>
+          <th>試合数</th>
+          <th>勝</th>
+          <th>敗</th>
+          <th>勝率</th>
+          <th>平均得点</th>
+          <th>平均失点</th>
+          <th>平均得失点差</th>
+        </tr>
+      </thead>
+      <tbody id="restDaysBody"></tbody>
+    </table>
+  </div>
+</section>
+
 </main>
 
 <footer>B.LEAGUE GAME CENTER · UNOFFICIAL FAN PROJECT</footer>
 
 <script>
 let officialData = null;
+let analyticsData = null;
 let currentArea = "東地区";
 let lastMainPage = "teams";
 
@@ -1250,6 +1296,7 @@ function showPage(page,button) {
   if(page!=="teamDetail") lastMainPage=page;
   if(page==="compare" && officialData) renderCompare();
   if(page==="calendar" && officialData) renderCalendar();
+  if(page==="restDays") renderRestDays();
 }
 
 function goBackToList() {
@@ -1861,6 +1908,89 @@ function renderCompare() {
   `;
 }
 
+/* REST DAYS FUNCTIONS */
+
+function getAnalyticsByTeam() {
+  return analyticsData?.analytics?.byTeam || officialData?.analytics?.byTeam || null;
+}
+
+function renderRestDays() {
+  const tbody = document.getElementById("restDaysBody");
+  if (!tbody) return;
+
+  const byTeam = getAnalyticsByTeam();
+  if (!byTeam) {
+    tbody.innerHTML = `<tr><td colspan="9">休養日数データ（analytics.byTeam）が見つかりません</td></tr>`;
+    return;
+  }
+
+  const restKey = document.getElementById("restDayFilter")?.value || "中1日";
+
+  const rows = Object.entries(teamInfo).map(([officialName, info]) => {
+    const alias = info.alias || officialName;
+    const teamStats = byTeam[alias] || byTeam[officialName] || {};
+    const stat = teamStats.byRestDays?.[restKey] || {
+      games: 0,
+      wins: 0,
+      losses: 0,
+      winRate: 0,
+      avgPointsFor: 0,
+      avgPointsAgainst: 0,
+      avgPointDiff: 0
+    };
+
+    return {
+      officialName,
+      alias,
+      games: Number(stat.games || 0),
+      wins: Number(stat.wins || 0),
+      losses: Number(stat.losses || 0),
+      winRate: Number(stat.winRate || 0),
+      avgPointsFor: Number(stat.avgPointsFor || 0),
+      avgPointsAgainst: Number(stat.avgPointsAgainst || 0),
+      avgPointDiff: Number(stat.avgPointDiff || 0)
+    };
+  });
+
+  rows.sort((a, b) => {
+    if (a.games === 0 && b.games === 0) return a.officialName.localeCompare(b.officialName, "ja");
+    if (a.games === 0) return 1;
+    if (b.games === 0) return -1;
+    if (b.winRate !== a.winRate) return b.winRate - a.winRate;
+    return b.avgPointDiff - a.avgPointDiff;
+  });
+
+  tbody.innerHTML = rows.map((row, index) => {
+    const hasGames = row.games > 0;
+    const rankDisplay = hasGames ? index + 1 : "-";
+    const rankClass = hasGames && index < 3 ? `rank-${index + 1}` : "";
+    const winRateText = hasGames ? `${(row.winRate * 100).toFixed(1)}%` : "-";
+    const diffSign = row.avgPointDiff > 0 ? "+" : "";
+    const diffText = hasGames ? `${diffSign}${row.avgPointDiff.toFixed(1)}` : "-";
+
+    return `
+      <tr>
+        <td><span class="rank ${rankClass}">${escapeHtml(rankDisplay)}</span></td>
+        <td>
+          <div class="standings-team">
+            ${teamLogoHtml(row.officialName)}
+            <button class="team-link" onclick="openTeamDetail('${encodeURIComponent(row.officialName)}')">
+              ${escapeHtml(row.officialName)}
+            </button>
+          </div>
+        </td>
+        <td>${row.games}</td>
+        <td>${row.wins}</td>
+        <td>${row.losses}</td>
+        <td><strong>${winRateText}</strong></td>
+        <td>${hasGames ? row.avgPointsFor.toFixed(1) : "-"}</td>
+        <td>${hasGames ? row.avgPointsAgainst.toFixed(1) : "-"}</td>
+        <td>${diffText}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
 function showLoadError() {
   const message=`
     <div class="error-message">
@@ -1877,6 +2007,8 @@ function showLoadError() {
   document.getElementById("westTeams").innerHTML=message;
   document.getElementById("compareContent").innerHTML=message;
   document.getElementById("calendarGames").innerHTML=message;
+  document.getElementById("restDaysBody").innerHTML=
+    `<tr><td colspan="9">データを読み込めませんでした</td></tr>`;
 }
 
 async function loadOfficialData() {
@@ -1890,11 +2022,23 @@ async function loadOfficialData() {
       throw new Error("data.json の形式が正しくありません");
     }
 
+    if (!officialData.analytics) {
+      try {
+        const analyticsRes = await fetch("./data_with_analytics.json", {cache:"no-store"});
+        if (analyticsRes.ok) {
+          analyticsData = await analyticsRes.json();
+        }
+      } catch (_) {
+        // 任意データのため読み込み失敗時は無視
+      }
+    }
+
     renderSchedule();
     renderStandings();
     renderTeams();
     initializeCompare();
     renderCalendar();
+    renderRestDays();
 
   } catch(error) {
     console.error(error);
