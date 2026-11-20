@@ -1037,7 +1037,6 @@ footer {
   <div id="scheduleGames" class="cards"></div>
 </section>
 
-<!-- CALENDAR -->
 <section id="calendar" class="page">
   <div class="page-heading">
     <h1>GAME CALENDAR</h1>
@@ -1146,7 +1145,7 @@ footer {
 <section id="restDays" class="page">
   <div class="page-heading">
     <h1>REST DAYS STATS</h1>
-    <p class="subtitle">休養日数別の全チーム勝率・得失点</p>
+    <p class="subtitle">休養日数別の全チーム勝率・得失点 &amp; 今後の日程キツさ</p>
   </div>
 
   <div class="schedule-filter">
@@ -1178,6 +1177,36 @@ footer {
         </tr>
       </thead>
       <tbody id="restDaysBody"></tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title purple">UPCOMING SCHEDULE TOUGHNESS</h2>
+  <div class="schedule-filter">
+    <label for="toughnessSort">🔥 並び替え基準</label>
+    <select id="toughnessSort" onchange="renderUpcomingToughness()">
+      <option value="hardRate" selected>ハード日程率順（中0日+中1日の割合）</option>
+      <option value="hardCount">ハード日程数順（中0日+中1日の試合数）</option>
+      <option value="b2bCount">連戦数順（中0日(連戦)の試合数）</option>
+      <option value="rest5Count">中5日以上の試合数順</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>順位</th>
+          <th>チーム</th>
+          <th>残試合</th>
+          <th>中0日(連戦)</th>
+          <th>中1日</th>
+          <th>中2日</th>
+          <th>中3〜4日</th>
+          <th>中5日以上</th>
+          <th>ハード率(中0〜1日)</th>
+        </tr>
+      </thead>
+      <tbody id="upcomingToughnessBody"></tbody>
     </table>
   </div>
 </section>
@@ -1296,7 +1325,10 @@ function showPage(page,button) {
   if(page!=="teamDetail") lastMainPage=page;
   if(page==="compare" && officialData) renderCompare();
   if(page==="calendar" && officialData) renderCalendar();
-  if(page==="restDays") renderRestDays();
+  if(page==="restDays") {
+    renderRestDays();
+    renderUpcomingToughness();
+  }
 }
 
 function goBackToList() {
@@ -1908,7 +1940,7 @@ function renderCompare() {
   `;
 }
 
-/* REST DAYS FUNCTIONS */
+/* REST DAYS & TOUGHNESS FUNCTIONS */
 
 function getAnalyticsByTeam() {
   return analyticsData?.analytics?.byTeam || officialData?.analytics?.byTeam || null;
@@ -1991,6 +2023,96 @@ function renderRestDays() {
   }).join("");
 }
 
+function renderUpcomingToughness() {
+  const tbody = document.getElementById("upcomingToughnessBody");
+  if (!tbody) return;
+
+  const byTeam = getAnalyticsByTeam();
+  if (!byTeam) {
+    tbody.innerHTML = `<tr><td colspan="9">今後の日程データ（upcomingRestDistribution）が見つかりません</td></tr>`;
+    return;
+  }
+
+  const sortKey = document.getElementById("toughnessSort")?.value || "hardRate";
+
+  const rows = Object.entries(teamInfo).map(([officialName, info]) => {
+    const alias = info.alias || officialName;
+    const teamStats = byTeam[alias] || byTeam[officialName] || {};
+    const dist = teamStats.upcomingRestDistribution || {};
+
+    const d0 = Number(dist["中0日(連戦)"] || 0);
+    const d1 = Number(dist["中1日"] || 0);
+    const d2 = Number(dist["中2日"] || 0);
+    const d34 = Number(dist["中3〜4日"] || 0);
+    const d5 = Number(dist["中5日以上"] || 0);
+
+    const remaining = d0 + d1 + d2 + d34 + d5;
+    const hardCount = d0 + d1;
+    const hardRate = remaining > 0 ? hardCount / remaining : 0;
+
+    return {
+      officialName,
+      remaining,
+      d0,
+      d1,
+      d2,
+      d34,
+      d5,
+      hardCount,
+      hardRate
+    };
+  });
+
+  rows.sort((a, b) => {
+    if (a.remaining === 0 && b.remaining === 0) return a.officialName.localeCompare(b.officialName, "ja");
+    if (a.remaining === 0) return 1;
+    if (b.remaining === 0) return -1;
+
+    if (sortKey === "hardCount") {
+      if (b.hardCount !== a.hardCount) return b.hardCount - a.hardCount;
+      return b.hardRate - a.hardRate;
+    }
+    if (sortKey === "b2bCount") {
+      if (b.d0 !== a.d0) return b.d0 - a.d0;
+      return b.hardRate - a.hardRate;
+    }
+    if (sortKey === "rest5Count") {
+      if (b.d5 !== a.d5) return b.d5 - a.d5;
+      return a.hardRate - b.hardRate;
+    }
+    if (b.hardRate !== a.hardRate) return b.hardRate - a.hardRate;
+    return b.hardCount - a.hardCount;
+  });
+
+  tbody.innerHTML = rows.map((row, index) => {
+    const hasGames = row.remaining > 0;
+    const rankDisplay = hasGames ? index + 1 : "-";
+    const rankClass = hasGames && index < 3 ? `rank-${index + 1}` : "";
+    const hardRateText = hasGames ? `${(row.hardRate * 100).toFixed(1)}%` : "-";
+
+    return `
+      <tr>
+        <td><span class="rank ${rankClass}">${escapeHtml(rankDisplay)}</span></td>
+        <td>
+          <div class="standings-team">
+            ${teamLogoHtml(row.officialName)}
+            <button class="team-link" onclick="openTeamDetail('${encodeURIComponent(row.officialName)}')">
+              ${escapeHtml(row.officialName)}
+            </button>
+          </div>
+        </td>
+        <td>${row.remaining}</td>
+        <td>${row.d0}</td>
+        <td>${row.d1}</td>
+        <td>${row.d2}</td>
+        <td>${row.d34}</td>
+        <td>${row.d5}</td>
+        <td><strong>${hardRateText}</strong></td>
+      </tr>
+    `;
+  }).join("");
+}
+
 function showLoadError() {
   const message=`
     <div class="error-message">
@@ -2008,6 +2130,8 @@ function showLoadError() {
   document.getElementById("compareContent").innerHTML=message;
   document.getElementById("calendarGames").innerHTML=message;
   document.getElementById("restDaysBody").innerHTML=
+    `<tr><td colspan="9">データを読み込めませんでした</td></tr>`;
+  document.getElementById("upcomingToughnessBody").innerHTML=
     `<tr><td colspan="9">データを読み込めませんでした</td></tr>`;
 }
 
@@ -2039,6 +2163,7 @@ async function loadOfficialData() {
     initializeCompare();
     renderCalendar();
     renderRestDays();
+    renderUpcomingToughness();
 
   } catch(error) {
     console.error(error);
