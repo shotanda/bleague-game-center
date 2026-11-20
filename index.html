@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B.LEAGUE GAME CENTER</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #080d18;
+  color: #f5f7fb;
+  font-family: Arial, "Noto Sans JP", sans-serif;
+}
+header {
+  height: 70px;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #101827;
+  border-bottom: 1px solid #253047;
+}
+.logo { font-size: 20px; font-weight: 900; letter-spacing: 1px; }
+.logo span { color: #ff7139; }
+.season { color: #9ba9bd; font-size: 13px; }
+nav {
+  display: flex;
+  gap: 10px;
+  padding: 18px 6%;
+  border-bottom: 1px solid #253047;
+  overflow-x: auto;
+}
+nav button, .league button {
+  background: transparent;
+  color: #9ba9bd;
+  border: 0;
+  padding: 10px 17px;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+}
+nav button.active, .league button.active {
+  background: #ff7139;
+  color: white;
+  border-radius: 7px;
+}
+main { max-width: 1200px; margin: auto; padding: 35px 6%; }
+h1 { font-size: 30px; margin-bottom: 8px; }
+.subtitle { color: #8795aa; font-size: 14px; margin-bottom: 28px; }
+.league {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.section-title {
+  font-size: 19px;
+  margin: 28px 0 16px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 15px;
+}
+.card {
+  background: #121d30;
+  border: 1px solid #26354d;
+  border-radius: 12px;
+  padding: 20px;
+}
+.tag { color: #ff936c; font-size: 12px; font-weight: bold; }
+.match {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+  gap: 8px;
+}
+.team { text-align: center; flex: 1; font-weight: bold; }
+.team small { display: block; color: #8493a9; margin-top: 8px; font-weight: normal; }
+.score { font-size: 25px; font-weight: 900; white-space: nowrap; }
+.status { color: #ff7139; font-size: 12px; text-align: center; margin-top: 15px; }
+table { width: 100%; border-collapse: collapse; background: #121d30; border-radius: 10px; overflow: hidden; }
+th, td { padding: 15px 12px; text-align: center; border-bottom: 1px solid #26354d; }
+th { color: #ff936c; font-size: 12px; }
+td { font-size: 14px; }
+td:nth-child(2) { text-align: left; font-weight: bold; }
+.rank { color: #ff936c; font-weight: bold; }
+.page { display: none; }
+.page.active { display: block; }
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(170px,1fr));
+  gap: 12px;
+}
+.team-card {
+  padding: 20px;
+  background: #121d30;
+  border: 1px solid #26354d;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.team-card small { display: block; color: #8493a9; margin-top: 8px; }
+footer {
+  text-align: center;
+  color: #66758b;
+  padding: 35px;
+  font-size: 12px;
+}
+@media(max-width:600px) {
+  header { padding: 0 4%; }
+  main { padding: 25px 4%; }
+  h1 { font-size: 24px; }
+  th, td { padding: 12px 6px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">B.LEAGUE <span>GAME CENTER</span></div>
+  <div class="season">2026-27 SEASON</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showPage('home',this)">HOME</button>
+  <button onclick="showPage('schedule',this)">SCHEDULE / RESULT</button>
+  <button onclick="showPage('standings',this)">STANDINGS</button>
+  <button onclick="showPage('teams',this)">TEAMS</button>
+</nav>
+
+<main>
+  <div class="league">
+    <button class="active" onclick="selectLeague('B.PREMIER',this)">B.PREMIER</button>
+    <button onclick="selectLeague('B.ONE',this)">B.ONE</button>
+    <button onclick="selectLeague('B.NEXT',this)">B.NEXT</button>
+  </div>
+
+  <section id="home" class="page active">
+    <h1>GAME CENTER</h1>
+    <p class="subtitle">B.LEAGUE 2026-27 · 試合情報</p>
+    <h2 class="section-title">TODAY'S GAMES</h2>
+    <div id="homeGames" class="cards"></div>
+    <h2 class="section-title">LATEST RESULTS</h2>
+    <div id="latestGames" class="cards"></div>
+  </section>
+
+  <section id="schedule" class="page">
+    <h1>SCHEDULE / RESULT</h1>
+    <p class="subtitle">試合日程・試合結果</p>
+    <div id="scheduleGames" class="cards"></div>
+  </section>
+
+  <section id="standings" class="page">
+    <h1>STANDINGS</h1>
+    <p class="subtitle">リーグ順位表</p>
+    <table>
+      <thead><tr><th>RANK</th><th>TEAM</th><th>WIN</th><th>LOSE</th><th>勝率</th></tr></thead>
+      <tbody id="ranking"></tbody>
+    </table>
+  </section>
+
+  <section id="teams" class="page">
+    <h1>TEAMS</h1>
+    <p class="subtitle">クラブ一覧</p>
+    <div id="teamList" class="team-grid"></div>
+  </section>
+</main>
+
+<footer>
+  B.LEAGUE GAME CENTER · UNOFFICIAL FAN PROJECT
+</footer>
+
+<script>
+const data = {
+  "B.PREMIER": {
+    teams: ["千葉ジェッツ","アルバルク東京","宇都宮ブレックス","琉球ゴールデンキングス","横浜ビー・コルセアーズ"],
+    games: [
+      {date:"2026/11/20",home:"千葉ジェッツ",away:"アルバルク東京",hs:82,as:76,status:"試合終了"},
+      {date:"2026/11/20",home:"宇都宮ブレックス",away:"琉球ゴールデンキングス",hs:0,as:0,status:"試合前"},
+      {date:"2026/11/21",home:"横浜ビー・コルセアーズ",away:"千葉ジェッツ",hs:0,as:0,status:"試合前"}
+    ],
+    standings: [
+      ["千葉ジェッツ",10,2,".833"],
+      ["宇都宮ブレックス",9,3,".750"],
+      ["アルバルク東京",8,4,".667"],
+      ["琉球ゴールデンキングス",7,5,".583"],
+      ["横浜ビー・コルセアーズ",5,7,".417"]
+    ]
+  },
+  "B.ONE": {
+    teams:["福島ファイヤーボンズ","信州ブレイブウォリアーズ","熊本ヴォルターズ","愛媛オレンジバイキングス"],
+    games:[
+      {date:"2026/11/20",home:"福島ファイヤーボンズ",away:"信州ブレイブウォリアーズ",hs:78,as:70,status:"試合終了"},
+      {date:"2026/11/21",home:"熊本ヴォルターズ",away:"愛媛オレンジバイキングス",hs:0,as:0,status:"試合前"}
+    ],
+    standings:[
+      ["福島ファイヤーボンズ",9,3,".750"],
+      ["信州ブレイブウォリアーズ",8,4,".667"],
+      ["熊本ヴォルターズ",6,6,".500"],
+      ["愛媛オレンジバイキングス",4,8,".333"]
+    ]
+  },
+  "B.NEXT": {
+    teams:["クラブA","クラブB","クラブC"],
+    games:[
+      {date:"2026/11/20",home:"クラブA",away:"クラブB",hs:0,as:0,status:"試合前"}
+    ],
+    standings:[
+      ["クラブA",5,2,".714"],
+      ["クラブB",4,3,".571"],
+      ["クラブC",2,5,".286"]
+    ]
+  }
+};
+
+let currentLeague = "B.PREMIER";
+
+function gameCard(g) {
+  const score = g.status === "試合終了" || g.status === "LIVE";
+  return `
+    <div class="card">
+      <div class="tag">${g.date} · ${currentLeague}</div>
+      <div class="match">
+        <div class="team">${g.home}</div>
+        <div class="score">${score ? g.hs+" - "+g.as : "VS"}</div>
+        <div class="team">${g.away}</div>
+      </div>
+      <div class="status">${g.status}</div>
+    </div>`;
+}
+
+function render() {
+  const d = data[currentLeague];
+  document.getElementById("homeGames").innerHTML =
+    d.games.filter(g=>g.date==="2026/11/20").map(gameCard).join("") || "<p>試合はありません</p>";
+  document.getElementById("latestGames").innerHTML =
+    d.games.filter(g=>g.status==="試合終了").map(gameCard).join("") || "<p>試合結果はありません</p>";
+  document.getElementById("scheduleGames").innerHTML =
+    d.games.map(gameCard).join("");
+  document.getElementById("ranking").innerHTML =
+    d.standings.map((t,i)=>`
+      <tr><td class="rank">${i+1}</td><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td><td>${t[3]}</td></tr>
+    `).join("");
+  document.getElementById("teamList").innerHTML =
+    d.teams.map(t=>`<div class="team-card">${t}<small>${currentLeague}</small></div>`).join("");
+}
+
+function selectLeague(league,button) {
+  currentLeague = league;
+  document.querySelectorAll(".league button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  render();
+}
+
+function showPage(page,button) {
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+}
+
+render();
+</script>
+</body>
+</html>
