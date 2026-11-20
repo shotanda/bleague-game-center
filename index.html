@@ -7,729 +7,807 @@
 <title>B.LEAGUE GAME CENTER</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 :root {
-  --orange: #ff7139;
-  --yellow: #ffd84d;
-  --blue: #54c9e8;
-  --purple: #a58bea;
-  --pink: #ff91ad;
-  --green: #7bd6a6;
-  --navy: #28324a;
-  --text: #30394e;
-  --muted: #8990a1;
-  --bg: #fff8e9;
-  --white: #ffffff;
-  --border: #eee7d9;
-  --shadow: 0 7px 22px rgba(65, 54, 35, .08);
+  --orange:#ff7139;
+  --yellow:#ffd84d;
+  --blue:#54c9e8;
+  --purple:#a58bea;
+  --pink:#ff91ad;
+  --green:#7bd6a6;
+  --navy:#28324a;
+  --text:#30394e;
+  --muted:#8990a1;
+  --bg:#fff8e9;
+  --border:#eee7d9;
+  --shadow:0 7px 22px rgba(65,54,35,.08);
 }
 
 body {
-  margin: 0;
+  margin:0;
   background:
-    radial-gradient(circle at 5% 5%, rgba(255,216,77,.18), transparent 22%),
-    radial-gradient(circle at 95% 20%, rgba(84,201,232,.14), transparent 25%),
+    radial-gradient(circle at 5% 5%,rgba(255,216,77,.18),transparent 22%),
+    radial-gradient(circle at 95% 20%,rgba(84,201,232,.14),transparent 25%),
     var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",
+  "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
 }
 
-button {
-  font: inherit;
-}
+button,select { font:inherit; }
 
 header {
-  background: var(--orange);
-  color: white;
-  padding: 22px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  box-shadow: 0 5px 18px rgba(255,113,57,.2);
+  background:var(--orange);
+  color:white;
+  padding:22px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  box-shadow:0 5px 18px rgba(255,113,57,.2);
 }
 
 .brand {
-  font-size: 23px;
-  font-weight: 1000;
-  letter-spacing: .5px;
+  font-size:23px;
+  font-weight:1000;
 }
 
 .brand small {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 2px;
-  opacity: .9;
-  margin-top: 3px;
+  display:block;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-top:3px;
 }
 
 .season-pill {
-  background: white;
-  color: var(--orange);
-  border-radius: 30px;
-  padding: 9px 15px;
-  font-size: 12px;
-  font-weight: 900;
-  white-space: nowrap;
+  background:white;
+  color:var(--orange);
+  border-radius:30px;
+  padding:9px 15px;
+  font-size:12px;
+  font-weight:900;
 }
 
 nav {
-  display: flex;
-  justify-content: center;
-  gap: 9px;
-  padding: 15px 12px;
-  background: rgba(255,255,255,.85);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  backdrop-filter: blur(12px);
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:14px 10px;
+  background:rgba(255,255,255,.9);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(12px);
 }
 
 nav button {
-  border: 0;
-  background: #f4f0e8;
-  color: #6d7180;
-  padding: 11px 20px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 900;
-  cursor: pointer;
-  transition: .2s;
-}
-
-nav button:hover {
-  transform: translateY(-2px);
+  border:0;
+  background:#f4f0e8;
+  color:#6d7180;
+  padding:11px 17px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 nav button.active {
-  background: var(--navy);
-  color: white;
-  box-shadow: 0 4px 10px rgba(40,50,74,.18);
+  background:var(--navy);
+  color:white;
 }
 
 main {
-  width: min(1180px, 92%);
-  margin: 30px auto 70px;
+  width:min(1180px,92%);
+  margin:30px auto 70px;
 }
 
-.page {
-  display: none;
-  animation: fadeIn .25s ease;
-}
-
-.page.active {
-  display: block;
-}
+.page { display:none; animation:fadeIn .25s ease; }
+.page.active { display:block; }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {opacity:0;transform:translateY(5px)}
+  to {opacity:1;transform:translateY(0)}
 }
 
-.page-heading {
-  margin-bottom: 25px;
-}
+.page-heading { margin-bottom:25px; }
 
 .page-heading h1 {
-  font-size: clamp(27px, 5vw, 42px);
-  font-weight: 1000;
-  margin: 0;
-  letter-spacing: -1px;
-  color: var(--navy);
+  font-size:clamp(27px,5vw,42px);
+  font-weight:1000;
+  margin:0;
+  color:var(--navy);
 }
 
 .subtitle {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-  margin-top: 7px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+  margin-top:7px;
 }
 
 .section-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 19px;
-  font-weight: 1000;
-  color: var(--navy);
-  margin: 35px 0 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:19px;
+  font-weight:1000;
+  color:var(--navy);
+  margin:35px 0 16px;
 }
 
 .section-title::before {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 25px;
-  border-radius: 8px;
-  background: var(--orange);
+  content:"";
+  width:8px;
+  height:25px;
+  border-radius:8px;
+  background:var(--orange);
 }
 
-.section-title.blue::before { background: var(--blue); }
-.section-title.purple::before { background: var(--purple); }
-.section-title.yellow::before { background: var(--yellow); }
+.section-title.blue::before {background:var(--blue)}
+.section-title.purple::before {background:var(--purple)}
+.section-title.yellow::before {background:var(--yellow)}
 
 .hero {
-  background: linear-gradient(120deg, #ff7139, #ff9a55);
-  border-radius: 25px;
-  padding: 30px;
-  color: white;
-  box-shadow: 0 10px 25px rgba(255,113,57,.18);
-  position: relative;
-  overflow: hidden;
+  background:linear-gradient(120deg,#ff7139,#ff9a55);
+  border-radius:25px;
+  padding:30px;
+  color:white;
+  box-shadow:0 10px 25px rgba(255,113,57,.18);
+  position:relative;
+  overflow:hidden;
 }
 
 .hero::after {
-  content: "🏀";
-  position: absolute;
-  right: 25px;
-  bottom: -22px;
-  font-size: 115px;
-  opacity: .2;
-  transform: rotate(-18deg);
+  content:"🏀";
+  position:absolute;
+  right:25px;
+  bottom:-22px;
+  font-size:115px;
+  opacity:.2;
+  transform:rotate(-18deg);
 }
 
 .hero h1 {
-  font-size: clamp(30px, 6vw, 48px);
-  margin: 0;
-  font-weight: 1000;
-  letter-spacing: -1px;
+  font-size:clamp(30px,6vw,48px);
+  margin:0;
+  font-weight:1000;
 }
 
 .hero p {
-  margin: 8px 0 0;
-  font-size: 13px;
-  font-weight: 700;
-  opacity: .95;
+  margin:8px 0 0;
+  font-size:13px;
+  font-weight:700;
 }
 
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
 }
 
 .card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 19px;
-  padding: 18px;
-  box-shadow: var(--shadow);
-  position: relative;
-  overflow: hidden;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
 
 .card::before {
-  content: "";
-  position: absolute;
-  height: 5px;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: var(--blue);
+  content:"";
+  position:absolute;
+  height:5px;
+  top:0;
+  left:0;
+  right:0;
+  background:var(--blue);
 }
 
-.card:nth-child(4n+2)::before { background: var(--yellow); }
-.card:nth-child(4n+3)::before { background: var(--pink); }
-.card:nth-child(4n+4)::before { background: var(--purple); }
+.card:nth-child(4n+2)::before {background:var(--yellow)}
+.card:nth-child(4n+3)::before {background:var(--pink)}
+.card:nth-child(4n+4)::before {background:var(--purple)}
 
 .card-date {
-  font-size: 11px;
-  font-weight: 900;
-  color: var(--muted);
-  margin-bottom: 15px;
+  font-size:11px;
+  font-weight:900;
+  color:var(--muted);
+  margin-bottom:15px;
 }
 
 .match {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:8px;
+  text-align:center;
 }
 
 .match-team {
-  min-width: 0;
-  font-size: 14px;
-  font-weight: 900;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
+  min-width:0;
+  font-size:14px;
+  font-weight:900;
+  line-height:1.4;
+  overflow-wrap:anywhere;
 }
 
 .match-team img {
-  display: block;
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  margin: 0 auto 7px;
-}
-
-.match-team:last-child img {
-  margin-left: auto;
-  margin-right: auto;
+  display:block;
+  width:45px;
+  height:45px;
+  object-fit:contain;
+  margin:0 auto 7px;
 }
 
 .score {
-  font-size: 25px;
-  font-weight: 1000;
-  color: var(--navy);
-  white-space: nowrap;
+  font-size:25px;
+  font-weight:1000;
+  color:var(--navy);
+  white-space:nowrap;
 }
 
 .score .vs {
-  font-size: 12px;
-  color: #b0b3bd;
-  padding: 0 4px;
+  font-size:12px;
+  color:#b0b3bd;
+  padding:0 4px;
 }
 
 .match-meta {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: 11px;
-  color: var(--muted);
-  font-weight: 700;
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px dashed var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  font-size:11px;
+  color:var(--muted);
+  font-weight:700;
 }
 
 .tag {
-  display: inline-block;
-  border-radius: 30px;
-  padding: 5px 10px;
-  font-size: 10px;
-  font-weight: 1000;
-  background: #fff0e9;
-  color: var(--orange);
+  display:inline-block;
+  border-radius:30px;
+  padding:5px 10px;
+  font-size:10px;
+  font-weight:1000;
+  background:#fff0e9;
+  color:var(--orange);
 }
 
-.tag.finished {
-  background: #e9f8ef;
-  color: #26965c;
-}
-
-.tag.scheduled {
-  background: #e8f7fc;
-  color: #2698b7;
-}
-
-.tag.live {
-  background: #ffe9ed;
-  color: #e34c70;
-}
+.tag.finished {background:#e9f8ef;color:#26965c}
+.tag.scheduled {background:#e8f7fc;color:#2698b7}
+.tag.live {background:#ffe9ed;color:#e34c70}
 
 .schedule-filter {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 15px;
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  box-shadow: var(--shadow);
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  box-shadow:var(--shadow);
 }
 
 .schedule-filter label {
-  font-size: 12px;
-  font-weight: 900;
+  font-size:12px;
+  font-weight:900;
 }
 
-.schedule-filter select {
-  border: 1px solid var(--border);
-  background: #fffaf2;
-  color: var(--navy);
-  border-radius: 10px;
-  padding: 10px 13px;
-  font-weight: 800;
-  outline: none;
+.schedule-filter select,
+.compare-select {
+  border:1px solid var(--border);
+  background:#fffaf2;
+  color:var(--navy);
+  border-radius:10px;
+  padding:11px 13px;
+  font-weight:800;
+  outline:none;
 }
 
 .filter-reset {
-  border: 0;
-  background: var(--yellow);
-  color: var(--navy);
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 900;
-  cursor: pointer;
+  border:0;
+  background:var(--yellow);
+  color:var(--navy);
+  padding:10px 15px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 .table-wrap {
-  overflow-x: auto;
-  background: white;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  overflow-x:auto;
+  background:white;
+  border-radius:18px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 760px;
-  font-size: 12px;
+  width:100%;
+  border-collapse:collapse;
+  min-width:760px;
+  font-size:12px;
 }
 
 th {
-  background: var(--navy);
-  color: white;
-  padding: 14px 10px;
-  font-weight: 900;
-  white-space: nowrap;
+  background:var(--navy);
+  color:white;
+  padding:14px 10px;
+  font-weight:900;
+  white-space:nowrap;
 }
 
 td {
-  padding: 12px 10px;
-  text-align: center;
-  border-bottom: 1px solid #f1eee7;
-  font-weight: 700;
-  white-space: nowrap;
+  padding:12px 10px;
+  text-align:center;
+  border-bottom:1px solid #f1eee7;
+  font-weight:700;
+  white-space:nowrap;
 }
 
-tbody tr:nth-child(even) {
-  background: #fffaf2;
-}
-
-tbody tr:hover {
-  background: #fff1df;
-}
+tbody tr:nth-child(even) {background:#fffaf2}
+tbody tr:hover {background:#fff1df}
 
 .rank {
-  font-size: 16px;
-  font-weight: 1000;
-  color: var(--navy);
+  font-size:16px;
+  font-weight:1000;
+  color:var(--navy);
 }
 
-.rank-1 { color: #e7a600; }
-.rank-2 { color: #8292a7; }
-.rank-3 { color: #bd8053; }
+.rank-1 {color:#e7a600}
+.rank-2 {color:#8292a7}
+.rank-3 {color:#bd8053}
 
 .standings-team {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  text-align: left;
-  min-width: 155px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  text-align:left;
+  min-width:155px;
 }
 
 .standings-team img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+  width:32px;
+  height:32px;
+  object-fit:contain;
 }
 
 .team-link {
-  color: var(--navy);
-  font-weight: 900;
-  cursor: pointer;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  padding: 0;
+  color:var(--navy);
+  font-weight:900;
+  cursor:pointer;
+  border:0;
+  background:transparent;
+  text-align:left;
+  padding:0;
 }
 
 .team-link:hover {
-  color: var(--orange);
-  text-decoration: underline;
+  color:var(--orange);
+  text-decoration:underline;
 }
 
 .area-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 18px;
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
 }
 
 .area-tabs button {
-  border: 0;
-  border-radius: 30px;
-  padding: 12px 24px;
-  background: white;
-  color: var(--navy);
-  font-size: 12px;
-  font-weight: 1000;
-  cursor: pointer;
-  box-shadow: var(--shadow);
+  border:0;
+  border-radius:30px;
+  padding:12px 24px;
+  background:white;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+  box-shadow:var(--shadow);
 }
 
 .area-tabs button.active {
-  background: var(--orange);
-  color: white;
+  background:var(--orange);
+  color:white;
 }
 
 .league {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 30px;
-  background: #fff0e9;
-  color: var(--orange);
-  font-size: 11px;
-  font-weight: 1000;
-  margin-bottom: 14px;
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:30px;
+  background:#fff0e9;
+  color:var(--orange);
+  font-size:11px;
+  font-weight:1000;
+  margin-bottom:14px;
 }
 
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-  gap: 14px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
+  gap:14px;
 }
 
 .team-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 19px;
-  padding: 20px 13px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: .2s;
-  position: relative;
-  overflow: hidden;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:20px 13px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  transition:.2s;
+  position:relative;
+  overflow:hidden;
 }
 
 .team-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: var(--blue);
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:5px;
+  background:var(--blue);
 }
 
-.team-card:nth-child(4n+2)::before { background: var(--yellow); }
-.team-card:nth-child(4n+3)::before { background: var(--pink); }
-.team-card:nth-child(4n+4)::before { background: var(--purple); }
+.team-card:nth-child(4n+2)::before {background:var(--yellow)}
+.team-card:nth-child(4n+3)::before {background:var(--pink)}
+.team-card:nth-child(4n+4)::before {background:var(--purple)}
 
 .team-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(65,54,35,.13);
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(65,54,35,.13);
 }
 
 .team-logo {
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
-  margin-bottom: 10px;
+  width:72px;
+  height:72px;
+  object-fit:contain;
+  margin-bottom:10px;
 }
 
 .team-card h3 {
-  font-size: 13px;
-  margin: 0;
-  font-weight: 1000;
-  line-height: 1.5;
+  font-size:13px;
+  margin:0;
+  font-weight:1000;
+  line-height:1.5;
 }
 
 .team-card p {
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 800;
-  margin: 6px 0 0;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  margin:6px 0 0;
 }
 
 .team-detail-header {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 23px;
-  padding: 25px;
-  box-shadow: var(--shadow);
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-bottom: 20px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:23px;
+  padding:25px;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  gap:22px;
+  margin-bottom:20px;
 }
 
 .team-detail-header img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
+  width:100px;
+  height:100px;
+  object-fit:contain;
 }
 
 .team-detail-header h2 {
-  font-size: 23px;
-  margin: 0;
-  color: var(--navy);
-  font-weight: 1000;
+  font-size:23px;
+  margin:0;
+  color:var(--navy);
+  font-weight:1000;
 }
 
 .team-detail-header p {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 800;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
 }
 
 .back-button {
-  border: 0;
-  background: var(--yellow);
-  color: var(--navy);
-  padding: 10px 17px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 1000;
-  cursor: pointer;
-  margin-bottom: 18px;
+  border:0;
+  background:var(--yellow);
+  color:var(--navy);
+  padding:10px 17px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+  margin-bottom:18px;
 }
 
 .detail-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 12px;
-  margin: 20px 0 30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:12px;
+  margin:20px 0 30px;
 }
 
 .stat-box {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 17px 10px;
-  text-align: center;
-  box-shadow: var(--shadow);
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:17px 10px;
+  text-align:center;
+  box-shadow:var(--shadow);
 }
 
-.stat-box:nth-child(4n+1) { border-top: 5px solid var(--orange); }
-.stat-box:nth-child(4n+2) { border-top: 5px solid var(--blue); }
-.stat-box:nth-child(4n+3) { border-top: 5px solid var(--yellow); }
-.stat-box:nth-child(4n+4) { border-top: 5px solid var(--purple); }
+.stat-box:nth-child(4n+1) {border-top:5px solid var(--orange)}
+.stat-box:nth-child(4n+2) {border-top:5px solid var(--blue)}
+.stat-box:nth-child(4n+3) {border-top:5px solid var(--yellow)}
+.stat-box:nth-child(4n+4) {border-top:5px solid var(--purple)}
 
 .stat-box span {
-  display: block;
-  font-size: 10px;
-  color: var(--muted);
-  font-weight: 900;
+  display:block;
+  font-size:10px;
+  color:var(--muted);
+  font-weight:900;
 }
 
 .stat-box strong {
-  display: block;
-  margin-top: 7px;
-  font-size: 24px;
-  color: var(--navy);
-  font-weight: 1000;
+  display:block;
+  margin-top:7px;
+  font-size:24px;
+  color:var(--navy);
+  font-weight:1000;
 }
 
 .detail-games {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:14px;
 }
 
 .empty-message {
-  background: white;
-  border: 1px dashed #e7ddca;
-  border-radius: 16px;
-  padding: 30px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 800;
+  background:white;
+  border:1px dashed #e7ddca;
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+
+/* COMPARE */
+
+.compare-intro {
+  background:linear-gradient(120deg,#54c9e8,#8bdbed);
+  color:var(--navy);
+  border-radius:22px;
+  padding:23px;
+  margin-bottom:20px;
+}
+
+.compare-intro h2 {
+  margin:0 0 7px;
+  font-size:22px;
+  font-weight:1000;
+}
+
+.compare-intro p {
+  margin:0;
+  font-size:12px;
+  font-weight:700;
+}
+
+.compare-picker {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:15px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.compare-team-picker {
+  min-width:0;
+  text-align:center;
+}
+
+.compare-team-picker label {
+  display:block;
+  font-size:11px;
+  font-weight:1000;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.compare-select {
+  width:100%;
+  max-width:280px;
+}
+
+.compare-vs {
+  background:var(--orange);
+  color:white;
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:14px;
+  font-weight:1000;
+  box-shadow:0 5px 12px rgba(255,113,57,.2);
+}
+
+.compare-logos {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:15px;
+  margin:20px 0;
+  text-align:center;
+}
+
+.compare-club img {
+  width:90px;
+  height:90px;
+  object-fit:contain;
+}
+
+.compare-club h3 {
+  margin:8px 0 0;
+  font-size:15px;
+  font-weight:1000;
+  color:var(--navy);
+}
+
+.compare-club p {
+  font-size:11px;
+  color:var(--muted);
+  font-weight:800;
+  margin:5px 0 0;
+}
+
+.compare-table {
+  min-width:500px;
+}
+
+.compare-table th:first-child,
+.compare-table td:first-child {
+  text-align:left;
+  padding-left:18px;
+}
+
+.compare-table td {
+  font-size:13px;
+}
+
+.compare-table .better {
+  color:#15965b;
+  font-weight:1000;
+  background:#edfaf2;
+}
+
+.compare-summary {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+
+.summary-box {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:17px 10px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.summary-box:nth-child(1) {border-top:5px solid var(--blue)}
+.summary-box:nth-child(2) {border-top:5px solid var(--yellow)}
+.summary-box:nth-child(3) {border-top:5px solid var(--pink)}
+
+.summary-box span {
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  font-weight:900;
+}
+
+.summary-box strong {
+  display:block;
+  font-size:24px;
+  color:var(--navy);
+  margin-top:6px;
+  font-weight:1000;
+}
+
+.compare-result {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:13px;
+  box-shadow:var(--shadow);
+}
+
+.compare-result .match-meta {
+  justify-content:center;
+}
+
+.compare-result .match {
+  max-width:500px;
+  margin:auto;
+}
+
+.compare-note {
+  font-size:11px;
+  color:var(--muted);
+  margin-top:12px;
+  line-height:1.7;
 }
 
 .error-message {
-  background: #fff0ed;
-  border: 1px solid #ffc9bd;
-  color: #b94b37;
-  padding: 20px;
-  border-radius: 15px;
-  font-size: 13px;
-  font-weight: 800;
+  background:#fff0ed;
+  border:1px solid #ffc9bd;
+  color:#b94b37;
+  padding:20px;
+  border-radius:15px;
+  font-size:13px;
+  font-weight:800;
 }
 
 footer {
-  text-align: center;
-  padding: 25px;
-  color: #a3a0a0;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  text-align:center;
+  padding:25px;
+  color:#a3a0a0;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
 }
 
-@media (max-width: 650px) {
-  header {
-    padding: 17px 4%;
-  }
-
-  .brand {
-    font-size: 18px;
-  }
-
-  nav {
-    gap: 5px;
-    padding: 10px 5px;
-  }
-
-  nav button {
-    padding: 10px 11px;
-    font-size: 10px;
-  }
-
-  main {
-    width: 94%;
-    margin-top: 20px;
-  }
-
-  .hero {
-    padding: 24px 20px;
-  }
-
-  .hero::after {
-    right: 5px;
-    font-size: 80px;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
-  .team-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .team-card {
-    padding: 16px 8px;
-  }
-
-  .team-logo {
-    width: 58px;
-    height: 58px;
-  }
-
-  .team-card h3 {
-    font-size: 11px;
-  }
-
-  .team-detail-header {
-    padding: 18px;
-    gap: 13px;
-  }
-
-  .team-detail-header img {
-    width: 75px;
-    height: 75px;
-  }
-
-  .team-detail-header h2 {
-    font-size: 17px;
-  }
-
-  .detail-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .schedule-filter {
-    gap: 8px;
-  }
-
-  .schedule-filter select {
-    width: 100%;
-  }
+@media(max-width:650px) {
+  header {padding:17px 4%}
+  .brand {font-size:18px}
+  nav {gap:5px;padding:10px 5px}
+  nav button {padding:10px 11px;font-size:10px}
+  main {width:94%;margin-top:20px}
+  .hero {padding:24px 20px}
+  .hero::after {right:5px;font-size:80px}
+  .cards {grid-template-columns:1fr}
+  .team-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .team-card {padding:16px 8px}
+  .team-logo {width:58px;height:58px}
+  .team-card h3 {font-size:11px}
+  .team-detail-header {padding:18px;gap:13px}
+  .team-detail-header img {width:75px;height:75px}
+  .team-detail-header h2 {font-size:17px}
+  .detail-stats {grid-template-columns:repeat(2,1fr)}
+  .schedule-filter {gap:8px}
+  .schedule-filter select {width:100%}
+  .compare-picker {gap:7px;padding:12px}
+  .compare-vs {width:36px;height:36px;font-size:11px}
+  .compare-select {font-size:11px;padding:10px 5px}
+  .compare-club img {width:65px;height:65px}
+  .compare-club h3 {font-size:12px}
+  .compare-summary {gap:6px}
+  .summary-box {padding:13px 5px}
+  .summary-box strong {font-size:19px}
+  .summary-box span {font-size:9px}
 }
 </style>
 </head>
@@ -738,7 +816,7 @@ footer {
 
 <header>
   <div class="brand">
-    🏀 B.PREMIER 試合結果
+    🏀 B.LEAGUE GAME CENTER
     <small>2026-27 SEASON</small>
   </div>
   <div class="season-pill">2026-27 SEASON</div>
@@ -749,96 +827,118 @@ footer {
   <button onclick="showPage('schedule',this)">SCHEDULE / RESULT</button>
   <button onclick="showPage('standings',this)">STANDINGS</button>
   <button onclick="showPage('teams',this)">TEAMS</button>
+  <button onclick="showPage('compare',this)">COMPARE</button>
 </nav>
 
 <main>
 
-  <section id="home" class="page active">
-    <div class="hero">
-      <h1>GAME CENTER</h1>
-      <p>B.LEAGUE 2026-27 · 試合情報をチェックしよう！</p>
+<section id="home" class="page active">
+  <div class="hero">
+    <h1>GAME CENTER</h1>
+    <p>B.LEAGUE 2026-27 · 試合情報をチェックしよう！</p>
+  </div>
+
+  <h2 class="section-title">TODAY'S GAMES</h2>
+  <div id="homeGames" class="cards"></div>
+
+  <h2 class="section-title blue">LATEST RESULTS</h2>
+  <div id="latestGames" class="cards"></div>
+</section>
+
+<section id="schedule" class="page">
+  <div class="page-heading">
+    <h1>SCHEDULE / RESULT</h1>
+    <p class="subtitle">試合日程・試合結果</p>
+  </div>
+
+  <div class="schedule-filter">
+    <label for="dateFilter">📅 試合日で絞り込み</label>
+    <select id="dateFilter" onchange="filterSchedule()">
+      <option value="">すべての日程</option>
+    </select>
+    <button class="filter-reset" onclick="resetScheduleFilter()">リセット</button>
+  </div>
+
+  <div id="scheduleGames" class="cards"></div>
+</section>
+
+<section id="standings" class="page">
+  <div class="page-heading">
+    <h1>STANDINGS</h1>
+    <p class="subtitle">地区別順位表</p>
+  </div>
+
+  <div class="area-tabs" id="areaTabs">
+    <button class="active" onclick="selectArea('東地区',this)">EAST</button>
+    <button onclick="selectArea('西地区',this)">WEST</button>
+  </div>
+
+  <div class="league" id="leagueLabel">EAST AREA</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>順位</th><th>チーム</th><th>勝</th><th>敗</th>
+          <th>勝率</th><th>ゲーム差</th><th>得点</th>
+          <th>失点</th><th>得失点差</th>
+        </tr>
+      </thead>
+      <tbody id="ranking"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="teams" class="page">
+  <div class="page-heading">
+    <h1>TEAMS</h1>
+    <p class="subtitle">B.LEAGUE CLUB COLLECTION</p>
+  </div>
+
+  <h2 class="section-title">EAST AREA</h2>
+  <div id="eastTeams" class="team-grid"></div>
+
+  <h2 class="section-title blue">WEST AREA</h2>
+  <div id="westTeams" class="team-grid"></div>
+</section>
+
+<section id="teamDetail" class="page">
+  <button class="back-button" onclick="goBackToList()">← チーム一覧に戻る</button>
+  <div id="teamDetailContent"></div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare" class="page">
+  <div class="page-heading">
+    <h1>TEAM COMPARISON</h1>
+    <p class="subtitle">チームの成績・直接対決を比較</p>
+  </div>
+
+  <div class="compare-intro">
+    <h2>🏀 HEAD TO HEAD</h2>
+    <p>気になる2チームを選んで、今シーズンの成績を比べてみよう！</p>
+  </div>
+
+  <div class="compare-picker">
+    <div class="compare-team-picker">
+      <label>TEAM A</label>
+      <select id="compareTeamA" class="compare-select" onchange="renderCompare()"></select>
     </div>
 
-    <h2 class="section-title">TODAY'S GAMES</h2>
-    <div id="homeGames" class="cards"></div>
+    <div class="compare-vs">VS</div>
 
-    <h2 class="section-title blue">LATEST RESULTS</h2>
-    <div id="latestGames" class="cards"></div>
-  </section>
-
-  <section id="schedule" class="page">
-    <div class="page-heading">
-      <h1>SCHEDULE / RESULT</h1>
-      <p class="subtitle">試合日程・試合結果</p>
+    <div class="compare-team-picker">
+      <label>TEAM B</label>
+      <select id="compareTeamB" class="compare-select" onchange="renderCompare()"></select>
     </div>
+  </div>
 
-    <div class="schedule-filter">
-      <label for="dateFilter">📅 試合日で絞り込み</label>
-      <select id="dateFilter" onchange="filterSchedule()">
-        <option value="">すべての日程</option>
-      </select>
-      <button class="filter-reset" onclick="resetScheduleFilter()">リセット</button>
-    </div>
-
-    <div id="scheduleGames" class="cards"></div>
-  </section>
-
-  <section id="standings" class="page">
-    <div class="page-heading">
-      <h1>STANDINGS</h1>
-      <p class="subtitle">地区別順位表</p>
-    </div>
-
-    <div class="area-tabs" id="areaTabs">
-      <button class="active" onclick="selectArea('東地区',this)">EAST</button>
-      <button onclick="selectArea('西地区',this)">WEST</button>
-    </div>
-
-    <div class="league" id="leagueLabel">EAST AREA</div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>順位</th>
-            <th>チーム</th>
-            <th>勝</th>
-            <th>敗</th>
-            <th>勝率</th>
-            <th>ゲーム差</th>
-            <th>得点</th>
-            <th>失点</th>
-            <th>得失点差</th>
-          </tr>
-        </thead>
-        <tbody id="ranking"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="teams" class="page">
-    <div class="page-heading">
-      <h1>TEAMS</h1>
-      <p class="subtitle">B.LEAGUE CLUB COLLECTION</p>
-    </div>
-
-    <h2 class="section-title">EAST AREA</h2>
-    <div id="eastTeams" class="team-grid"></div>
-
-    <h2 class="section-title blue">WEST AREA</h2>
-    <div id="westTeams" class="team-grid"></div>
-  </section>
-
-  <section id="teamDetail" class="page">
-    <button class="back-button" onclick="goBackToList()">← チーム一覧に戻る</button>
-    <div id="teamDetailContent"></div>
-  </section>
+  <div id="compareContent"></div>
+</section>
 
 </main>
 
-<footer>
-  B.LEAGUE GAME CENTER · UNOFFICIAL FAN PROJECT
-</footer>
+<footer>B.LEAGUE GAME CENTER · UNOFFICIAL FAN PROJECT</footer>
 
 <script>
 let officialData = null;
@@ -846,459 +946,605 @@ let currentArea = "東地区";
 let lastMainPage = "teams";
 
 const teamInfo = {
-  "仙台89ERS": {alias:"仙台", logo:"https://bleague.bl.kuroco-img.app/v=1783544480/files/user/common/img/logo/2026/s/se.png"},
-  "群馬クレインサンダーズ": {alias:"群馬", logo:"https://bleague.bl.kuroco-img.app/v=1772176008/files/user/common/img/logo/2026/s/gc.png"},
-  "アルバルク東京": {alias:"A東京", logo:"https://bleague.bl.kuroco-img.app/v=1772176008/files/user/common/img/logo/2026/s/at.png"},
-  "東京サンロッカーズ": {alias:"東京SR", logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/sr.png"},
-  "レバンガ北海道": {alias:"北海道", logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/lh.png"},
-  "茨城ロボッツ": {alias:"茨城", logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/ir.png"},
-  "富山グラウジーズ": {alias:"富山", logo:"https://bleague.bl.kuroco-img.app/v=1772176013/files/user/common/img/logo/2026/s/tg.png"},
-  "千葉ジェッツ": {alias:"千葉J", logo:"https://bleague.bl.kuroco-img.app/v=1772176007/files/user/common/img/logo/2026/s/cj.png"},
-  "宇都宮ブレックス": {alias:"宇都宮", logo:"https://bleague.bl.kuroco-img.app/v=1772176012/files/user/common/img/logo/2026/s/ub.png"},
-  "横浜ビー・コルセアーズ": {alias:"横浜BC", logo:"https://bleague.bl.kuroco-img.app/v=1791925326/files/user/common/img/logo/2026/s/yb.png"},
-  "アルティーリ千葉": {alias:"A千葉", logo:"https://bleague.bl.kuroco-img.app/v=1772176007/files/user/common/img/logo/2026/s/ac.png"},
-  "川崎ブレイブサンダース": {alias:"川崎", logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/kb.png"},
-  "秋田ノーザンハピネッツ": {alias:"秋田", logo:"https://bleague.bl.kuroco-img.app/v=1772176007/files/user/common/img/logo/2026/s/an.png"},
-  "名古屋ダイヤモンドドルフィンズ": {alias:"名古屋D", logo:"https://bleague.bl.kuroco-img.app/v=1772176008/files/user/common/img/logo/2026/s/dd.png"},
-  "広島ドラゴンフライズ": {alias:"広島", logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/hd.png"},
-  "シーホース三河": {alias:"三河", logo:"https://bleague.bl.kuroco-img.app/v=1772176012/files/user/common/img/logo/2026/s/sm.png"},
-  "三遠ネオフェニックス": {alias:"三遠", logo:"https://bleague.bl.kuroco-img.app/v=1783026140/files/user/common/img/logo/2026/s/sn.png"},
-  "京都ハンナリーズ": {alias:"京都", logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/kh.png"},
-  "琉球ゴールデンキングス": {alias:"琉球", logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/rg.png"},
-  "島根スサノオマジック": {alias:"島根", logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/ss.png"},
-  "滋賀レイクス": {alias:"滋賀", logo:"https://bleague.bl.kuroco-img.app/v=1772176009/files/user/common/img/logo/2026/s/ls.png"},
-  "長崎ヴェルカ": {alias:"長崎", logo:"https://bleague.bl.kuroco-img.app/v=1772176011/files/user/common/img/logo/2026/s/nv.png"},
-  "信州ブレイブウォリアーズ": {alias:"信州", logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/bw.png"},
-  "神戸ストークス": {alias:"神戸", logo:"https://bleague.bl.kuroco-img.app/v=1772176011/files/user/common/img/logo/2026/s/ns.png"},
-  "佐賀バルーナーズ": {alias:"佐賀", logo:"https://bleague.bl.kuroco-img.app/v=1772176012/files/user/common/img/logo/2026/s/sg.png"},
-  "大阪エヴェッサ": {alias:"大阪", logo:"https://bleague.bl.kuroco-img.app/v=1772176011/files/user/common/img/logo/2026/s/oe.png"}
+"仙台89ERS":{alias:"仙台",logo:"https://bleague.bl.kuroco-img.app/v=1783544480/files/user/common/img/logo/2026/s/se.png"},
+"群馬クレインサンダーズ":{alias:"群馬",logo:"https://bleague.bl.kuroco-img.app/v=1772176008/files/user/common/img/logo/2026/s/gc.png"},
+"アルバルク東京":{alias:"A東京",logo:"https://bleague.bl.kuroco-img.app/v=1772176008/files/user/common/img/logo/2026/s/at.png"},
+"東京サンロッカーズ":{alias:"東京SR",logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/sr.png"},
+"レバンガ北海道":{alias:"北海道",logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/lh.png"},
+"茨城ロボッツ":{alias:"茨城",logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/ir.png"},
+"富山グラウジーズ":{alias:"富山",logo:"https://bleague.bl.kuroco-img.app/v=1772176013/files/user/common/img/logo/2026/s/tg.png"},
+"千葉ジェッツ":{alias:"千葉J",logo:"https://bleague.bl.kuroco-img.app/v=1772176007/files/user/common/img/logo/2026/s/cj.png"},
+"宇都宮ブレックス":{alias:"宇都宮",logo:"https://bleague.bl.kuroco-img.app/v=1772176012/files/user/common/img/logo/2026/s/ub.png"},
+"横浜ビー・コルセアーズ":{alias:"横浜BC",logo:"https://bleague.bl.kuroco-img.app/v=1791925326/files/user/common/img/logo/2026/s/yb.png"},
+"アルティーリ千葉":{alias:"A千葉",logo:"https://bleague.bl.kuroco-img.app/v=1772176007/files/user/common/img/logo/2026/s/ac.png"},
+"川崎ブレイブサンダース":{alias:"川崎",logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/kb.png"},
+"秋田ノーザンハピネッツ":{alias:"秋田",logo:"https://bleague.bl.kuroco-img.app/v=1772176007/files/user/common/img/logo/2026/s/an.png"},
+"名古屋ダイヤモンドドルフィンズ":{alias:"名古屋D",logo:"https://bleague.bl.kuroco-img.app/v=1772176008/files/user/common/img/logo/2026/s/dd.png"},
+"広島ドラゴンフライズ":{alias:"広島",logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/hd.png"},
+"シーホース三河":{alias:"三河",logo:"https://bleague.bl.kuroco-img.app/v=1772176012/files/user/common/img/logo/2026/s/sm.png"},
+"三遠ネオフェニックス":{alias:"三遠",logo:"https://bleague.bl.kuroco-img.app/v=1783026140/files/user/common/img/logo/2026/s/sn.png"},
+"京都ハンナリーズ":{alias:"京都",logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/kh.png"},
+"琉球ゴールデンキングス":{alias:"琉球",logo:"https://bleague.bl.kuroco-img.app/v=1772176010/files/user/common/img/logo/2026/s/rg.png"},
+"島根スサノオマジック":{alias:"島根",logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/ss.png"},
+"滋賀レイクス":{alias:"滋賀",logo:"https://bleague.bl.kuroco-img.app/v=1772176009/files/user/common/img/logo/2026/s/ls.png"},
+"長崎ヴェルカ":{alias:"長崎",logo:"https://bleague.bl.kuroco-img.app/v=1772176011/files/user/common/img/logo/2026/s/nv.png"},
+"信州ブレイブウォリアーズ":{alias:"信州",logo:"https://bleague.bl.kuroco-img.app/v=1782853258/files/user/common/img/logo/2026/s/bw.png"},
+"神戸ストークス":{alias:"神戸",logo:"https://bleague.bl.kuroco-img.app/v=1772176011/files/user/common/img/logo/2026/s/ns.png"},
+"佐賀バルーナーズ":{alias:"佐賀",logo:"https://bleague.bl.kuroco-img.app/v=1772176012/files/user/common/img/logo/2026/s/sg.png"},
+"大阪エヴェッサ":{alias:"大阪",logo:"https://bleague.bl.kuroco-img.app/v=1772176011/files/user/common/img/logo/2026/s/oe.png"}
 };
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   })[char]);
 }
 
-function teamLogoHtml(teamName, large = false) {
-  const info = teamInfo[teamName];
-  if (!info?.logo) return "";
-
-  return `<img
-    src="${info.logo}"
-    alt="${escapeHtml(teamName)}"
-    loading="lazy"
-    style="${large ? "width:100px;height:100px;object-fit:contain;" : ""}"
-    onerror="this.style.display='none'"
-  >`;
+function teamLogoHtml(teamName,large=false) {
+  const info=teamInfo[teamName];
+  if(!info?.logo) return "";
+  return `<img src="${info.logo}" alt="${escapeHtml(teamName)}"
+    loading="lazy" style="${large?"width:100px;height:100px;object-fit:contain;":""}"
+    onerror="this.style.display='none'">`;
 }
 
 function getTeamAlias(teamName) {
-  return teamInfo[teamName]?.alias || teamName;
+  return teamInfo[teamName]?.alias||teamName;
 }
 
-function matchesTeam(scheduleName, officialName) {
-  if (!scheduleName || !officialName) return false;
-
-  const alias = getTeamAlias(officialName);
-
-  return scheduleName === officialName ||
-    scheduleName === alias ||
+function matchesTeam(scheduleName,officialName) {
+  if(!scheduleName||!officialName) return false;
+  const alias=getTeamAlias(officialName);
+  return scheduleName===officialName ||
+    scheduleName===alias ||
     officialName.includes(scheduleName) ||
     scheduleName.includes(officialName);
 }
 
 function sortGames(games) {
-  return [...games].sort((a, b) => {
-    const dateA = String(a.date || "");
-    const dateB = String(b.date || "");
-
-    if (dateA !== dateB) return dateA.localeCompare(dateB);
-
-    const timeA = gameTime(a) || "99:99";
-    const timeB = gameTime(b) || "99:99";
-
-    return timeA.localeCompare(timeB);
+  return [...games].sort((a,b)=>{
+    const dateA=String(a.date||"");
+    const dateB=String(b.date||"");
+    if(dateA!==dateB) return dateA.localeCompare(dateB);
+    return String(gameTime(a)||"99:99").localeCompare(String(gameTime(b)||"99:99"));
   });
 }
 
-function showPage(page, button) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+function showPage(page,button) {
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(page)?.classList.add("active");
 
-  const target = document.getElementById(page);
-  if (target) target.classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
 
-  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-  if (button) {
+  if(button) {
     button.classList.add("active");
   } else {
-    const navButton = [...document.querySelectorAll("nav button")]
-      .find(b => b.getAttribute("onclick")?.includes(`'${page}'`));
-    if (navButton) navButton.classList.add("active");
+    const navButton=[...document.querySelectorAll("nav button")]
+      .find(b=>b.getAttribute("onclick")?.includes(`'${page}'`));
+    if(navButton) navButton.classList.add("active");
   }
 
-  if (page !== "teamDetail") {
-    lastMainPage = page;
-  }
+  if(page!=="teamDetail") lastMainPage=page;
+  if(page==="compare" && officialData) renderCompare();
 }
 
 function goBackToList() {
-  showPage(lastMainPage || "teams");
+  showPage(lastMainPage||"teams");
 }
 
 function isFinished(g) {
-  return String(g.status || "").toUpperCase() === "FINAL" ||
-    (
-      g.homeScore !== null &&
-      g.homeScore !== undefined &&
-      g.homeScore !== "" &&
-      g.awayScore !== null &&
-      g.awayScore !== undefined &&
-      g.awayScore !== ""
-    );
+  return String(g.status||"").toUpperCase()==="FINAL" ||
+    (g.homeScore!==null && g.homeScore!==undefined && g.homeScore!=="" &&
+     g.awayScore!==null && g.awayScore!==undefined && g.awayScore!=="");
 }
 
 function gameVenue(g) {
-  return g.venue || g.info?.[4] || "";
+  return g.venue||g.info?.[4]||"";
 }
 
 function gameTime(g) {
-  return g.time || g.info?.[5] || "";
+  return g.time||g.info?.[5]||"";
 }
 
 function findOfficialTeam(scheduleName) {
-  return Object.keys(teamInfo).find(name => matchesTeam(scheduleName, name));
+  return Object.keys(teamInfo).find(name=>matchesTeam(scheduleName,name));
 }
 
 function scheduleTeamLogo(name) {
-  const officialName = findOfficialTeam(name);
-  return officialName ? teamLogoHtml(officialName) : "";
+  const officialName=findOfficialTeam(name);
+  return officialName?teamLogoHtml(officialName):"";
 }
 
 function gameCard(g) {
-  const finished = isFinished(g);
-  const status = String(g.status || "").toUpperCase();
+  const finished=isFinished(g);
+  const status=String(g.status||"").toUpperCase();
 
-  let statusText = finished ? "試合終了" : "試合予定";
-  let statusClass = finished ? "finished" : "scheduled";
+  let statusText=finished?"試合終了":"試合予定";
+  let statusClass=finished?"finished":"scheduled";
 
-  if (status.includes("LIVE") || status.includes("進行")) {
-    statusText = "LIVE";
-    statusClass = "live";
+  if(status.includes("LIVE")||status.includes("進行")) {
+    statusText="LIVE";
+    statusClass="live";
   }
 
-  const score = finished
+  const score=finished
     ? `<div class="score">${escapeHtml(g.homeScore)} <span class="vs">-</span> ${escapeHtml(g.awayScore)}</div>`
     : `<div class="score"><span class="vs">VS</span></div>`;
 
-  const dateText = g.date || "";
-
   return `
     <article class="card">
-      <div class="card-date">📅 ${escapeHtml(dateText)}</div>
-
+      <div class="card-date">📅 ${escapeHtml(g.date||"")}</div>
       <div class="match">
         <div class="match-team">
           ${scheduleTeamLogo(g.home)}
-          <div>${escapeHtml(g.home || "未定")}</div>
+          <div>${escapeHtml(g.home||"未定")}</div>
         </div>
-
         ${score}
-
         <div class="match-team">
           ${scheduleTeamLogo(g.away)}
-          <div>${escapeHtml(g.away || "未定")}</div>
+          <div>${escapeHtml(g.away||"未定")}</div>
         </div>
       </div>
-
       <div class="match-meta">
         <span>${escapeHtml(gameTime(g))}</span>
         <span>${escapeHtml(gameVenue(g))}</span>
         <span class="tag ${statusClass}">${statusText}</span>
       </div>
-
-      ${g.detail ? `
+      ${g.detail?`
         <div style="text-align:right;margin-top:10px">
           <a href="${escapeHtml(g.detail)}" target="_blank" rel="noopener"
-             style="font-size:11px;color:#ff7139;font-weight:900;text-decoration:none">
-            試合詳細 →
-          </a>
-        </div>` : ""}
+          style="font-size:11px;color:#ff7139;font-weight:900;text-decoration:none">
+          試合詳細 →</a>
+        </div>`:""}
     </article>
   `;
 }
 
 function renderSchedule() {
-  const games = sortGames(officialData.schedule || []);
+  const games=sortGames(officialData.schedule||[]);
+  const today=new Date();
+  const todayText=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
 
-  const today = new Date();
-  const todayText =
-    `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+  const todayGames=games.filter(g=>g.date===todayText);
+  document.getElementById("homeGames").innerHTML=todayGames.length
+    ?todayGames.map(gameCard).join("")
+    :`<div class="empty-message">本日の試合はありません 🏀</div>`;
 
-  const todayGames = games.filter(g => g.date === todayText);
+  const latestGames=games.filter(isFinished)
+    .sort((a,b)=>{
+      const dateCompare=String(b.date||"").localeCompare(String(a.date||""));
+      if(dateCompare!==0) return dateCompare;
+      return String(gameTime(b)||"").localeCompare(String(gameTime(a)||""));
+    }).slice(0,5);
 
-  document.getElementById("homeGames").innerHTML = todayGames.length
-    ? todayGames.map(gameCard).join("")
-    : `<div class="empty-message">本日の試合はありません 🏀</div>`;
+  document.getElementById("latestGames").innerHTML=latestGames.length
+    ?latestGames.map(gameCard).join("")
+    :`<div class="empty-message">試合結果はまだありません</div>`;
 
-  const latestGames = games
-    .filter(isFinished)
-    .sort((a, b) => {
-      const dateCompare = String(b.date || "").localeCompare(String(a.date || ""));
-      if (dateCompare !== 0) return dateCompare;
-      return String(gameTime(b) || "").localeCompare(String(gameTime(a) || ""));
-    })
-    .slice(0, 5);
+  const dateFilter=document.getElementById("dateFilter");
+  const selectedDate=dateFilter.value;
+  const dates=[...new Set(games.map(g=>g.date).filter(Boolean))].sort();
 
-  document.getElementById("latestGames").innerHTML = latestGames.length
-    ? latestGames.map(gameCard).join("")
-    : `<div class="empty-message">試合結果はまだありません</div>`;
+  dateFilter.innerHTML=`<option value="">すべての日程</option>`+
+    dates.map(date=>`<option value="${escapeHtml(date)}">${escapeHtml(date)}</option>`).join("");
 
-  const dateFilter = document.getElementById("dateFilter");
-  const selectedDate = dateFilter.value;
-
-  const dates = [...new Set(games.map(g => g.date).filter(Boolean))].sort();
-
-  dateFilter.innerHTML =
-    `<option value="">すべての日程</option>` +
-    dates.map(date =>
-      `<option value="${escapeHtml(date)}">${escapeHtml(date)}</option>`
-    ).join("");
-
-  if (dates.includes(selectedDate)) {
-    dateFilter.value = selectedDate;
-  }
-
+  if(dates.includes(selectedDate)) dateFilter.value=selectedDate;
   renderScheduleList(games);
 }
 
 function renderScheduleList(games) {
-  const selectedDate = document.getElementById("dateFilter")?.value || "";
+  const selectedDate=document.getElementById("dateFilter")?.value||"";
+  const filtered=selectedDate?games.filter(g=>g.date===selectedDate):games;
 
-  const filtered = selectedDate
-    ? games.filter(g => g.date === selectedDate)
-    : games;
-
-  const container = document.getElementById("scheduleGames");
-
-  container.innerHTML = filtered.length
-    ? filtered.map(gameCard).join("")
-    : `<div class="empty-message">該当する試合はありません</div>`;
+  document.getElementById("scheduleGames").innerHTML=filtered.length
+    ?filtered.map(gameCard).join("")
+    :`<div class="empty-message">該当する試合はありません</div>`;
 }
 
 function filterSchedule() {
-  renderScheduleList(sortGames(officialData?.schedule || []));
+  renderScheduleList(sortGames(officialData?.schedule||[]));
 }
 
 function resetScheduleFilter() {
-  document.getElementById("dateFilter").value = "";
-  renderScheduleList(sortGames(officialData?.schedule || []));
+  document.getElementById("dateFilter").value="";
+  renderScheduleList(sortGames(officialData?.schedule||[]));
 }
 
 function renderStandings() {
-  const areaData = officialData.standings?.[currentArea] || [];
-  const ranking = document.getElementById("ranking");
+  const areaData=officialData.standings?.[currentArea]||[];
+  const ranking=document.getElementById("ranking");
 
-  document.getElementById("leagueLabel").textContent =
-    currentArea === "東地区" ? "EAST AREA" : "WEST AREA";
+  document.getElementById("leagueLabel").textContent=
+    currentArea==="東地区"?"EAST AREA":"WEST AREA";
 
-  if (!areaData.length) {
-    ranking.innerHTML = `<tr><td colspan="9">順位データがありません</td></tr>`;
+  if(!areaData.length) {
+    ranking.innerHTML=`<tr><td colspan="9">順位データがありません</td></tr>`;
     return;
   }
 
-  ranking.innerHTML = areaData.map((team, index) => {
-    const rank = Number(team.rank || index + 1);
-    const rankClass = rank <= 3 ? `rank-${rank}` : "";
-
+  ranking.innerHTML=areaData.map((team,index)=>{
+    const rank=Number(team.rank||index+1);
     return `
       <tr>
-        <td><span class="rank ${rankClass}">${escapeHtml(rank)}</span></td>
+        <td><span class="rank ${rank<=3?`rank-${rank}`:""}">${escapeHtml(rank)}</span></td>
         <td>
           <div class="standings-team">
             ${teamLogoHtml(team.team)}
-            <button class="team-link"
-              onclick="openTeamDetail('${encodeURIComponent(team.team)}')">
+            <button class="team-link" onclick="openTeamDetail('${encodeURIComponent(team.team)}')">
               ${escapeHtml(team.team)}
             </button>
           </div>
         </td>
-        <td>${escapeHtml(team.wins ?? "-")}</td>
-        <td>${escapeHtml(team.losses ?? "-")}</td>
-        <td>${escapeHtml(team.winRate ?? "-")}</td>
-        <td>${escapeHtml(team.gamesBehind ?? "-")}</td>
-        <td>${escapeHtml(team.points ?? "-")}</td>
-        <td>${escapeHtml(team.pointsAgainst ?? "-")}</td>
-        <td>${escapeHtml(team.pointDifference ?? "-")}</td>
+        <td>${escapeHtml(team.wins??"-")}</td>
+        <td>${escapeHtml(team.losses??"-")}</td>
+        <td>${escapeHtml(team.winRate??"-")}</td>
+        <td>${escapeHtml(team.gamesBehind??"-")}</td>
+        <td>${escapeHtml(team.points??"-")}</td>
+        <td>${escapeHtml(team.pointsAgainst??"-")}</td>
+        <td>${escapeHtml(team.pointDifference??"-")}</td>
       </tr>
     `;
   }).join("");
 }
 
 function renderTeams() {
-  const standings = officialData.standings || {};
+  const standings=officialData.standings||{};
+  const east=standings["東地区"]||[];
+  const west=standings["西地区"]||[];
 
-  const east = standings["東地区"] || [];
-  const west = standings["西地区"] || [];
+  const renderTeamCards=(teams,area)=>{
+    if(!teams.length) return `<div class="empty-message">チーム情報がありません</div>`;
 
-  const renderTeamCards = (teams, area) => {
-    if (!teams.length) {
-      return `<div class="empty-message">チーム情報がありません</div>`;
-    }
-
-    return teams.map(team => `
-      <div class="team-card"
-        role="button"
-        tabindex="0"
+    return teams.map(team=>`
+      <div class="team-card" role="button" tabindex="0"
         onclick="openTeamDetail('${encodeURIComponent(team.team)}')"
         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTeamDetail('${encodeURIComponent(team.team)}')}">
         ${teamLogoHtml(team.team)}
         <h3>${escapeHtml(team.team)}</h3>
-        <p>${area} · ${escapeHtml(team.rank ?? "-")}位</p>
+        <p>${area} · ${escapeHtml(team.rank??"-")}位</p>
       </div>
     `).join("");
   };
 
-  document.getElementById("eastTeams").innerHTML =
-    renderTeamCards(east, "東地区");
-
-  document.getElementById("westTeams").innerHTML =
-    renderTeamCards(west, "西地区");
+  document.getElementById("eastTeams").innerHTML=renderTeamCards(east,"東地区");
+  document.getElementById("westTeams").innerHTML=renderTeamCards(west,"西地区");
 }
 
 function openTeamDetail(encodedName) {
-  const teamName = decodeURIComponent(encodedName);
+  const teamName=decodeURIComponent(encodedName);
+  const allStandings=officialData.standings||{};
+  let team=null;
+  let area="";
 
-  const allStandings = officialData.standings || {};
-  let team = null;
-  let area = "";
-
-  for (const [areaName, teams] of Object.entries(allStandings)) {
-    const found = (teams || []).find(t => t.team === teamName);
-    if (found) {
-      team = found;
-      area = areaName;
+  for(const [areaName,teams] of Object.entries(allStandings)) {
+    const found=(teams||[]).find(t=>t.team===teamName);
+    if(found) {
+      team=found;
+      area=areaName;
       break;
     }
   }
 
-  if (!team) return;
+  if(!team) return;
 
-  lastMainPage = document.querySelector(".page.active")?.id || "teams";
+  lastMainPage=document.querySelector(".page.active")?.id||"teams";
 
-  const games = sortGames(officialData.schedule || []).filter(g =>
-    matchesTeam(g.home, teamName) || matchesTeam(g.away, teamName)
+  const games=sortGames(officialData.schedule||[]).filter(g=>
+    matchesTeam(g.home,teamName)||matchesTeam(g.away,teamName)
   );
 
-  const winRate = team.winRate ?? "-";
-  const pointDifference = team.pointDifference ?? "-";
-
-  document.getElementById("teamDetailContent").innerHTML = `
+  document.getElementById("teamDetailContent").innerHTML=`
     <div class="team-detail-header">
-      ${teamLogoHtml(teamName, true)}
+      ${teamLogoHtml(teamName,true)}
       <div>
         <div class="league">${escapeHtml(area)}</div>
         <h2>${escapeHtml(teamName)}</h2>
-        <p>${escapeHtml(team.rank ?? "-")}位 · 2026-27 SEASON</p>
+        <p>${escapeHtml(team.rank??"-")}位 · 2026-27 SEASON</p>
       </div>
     </div>
 
     <h2 class="section-title">TEAM STATS</h2>
-
     <div class="detail-stats">
-      <div class="stat-box">
-        <span>順位</span>
-        <strong>${escapeHtml(team.rank ?? "-")}位</strong>
-      </div>
-      <div class="stat-box">
-        <span>勝利</span>
-        <strong>${escapeHtml(team.wins ?? "-")}</strong>
-      </div>
-      <div class="stat-box">
-        <span>敗戦</span>
-        <strong>${escapeHtml(team.losses ?? "-")}</strong>
-      </div>
-      <div class="stat-box">
-        <span>勝率</span>
-        <strong>${escapeHtml(winRate)}</strong>
-      </div>
-      <div class="stat-box">
-        <span>得失点差</span>
-        <strong>${escapeHtml(pointDifference)}</strong>
-      </div>
-      <div class="stat-box">
-        <span>試合数</span>
-        <strong>${escapeHtml(team.gamesPlayed ?? "-")}</strong>
-      </div>
+      <div class="stat-box"><span>順位</span><strong>${escapeHtml(team.rank??"-")}位</strong></div>
+      <div class="stat-box"><span>勝利</span><strong>${escapeHtml(team.wins??"-")}</strong></div>
+      <div class="stat-box"><span>敗戦</span><strong>${escapeHtml(team.losses??"-")}</strong></div>
+      <div class="stat-box"><span>勝率</span><strong>${escapeHtml(team.winRate??"-")}</strong></div>
+      <div class="stat-box"><span>得失点差</span><strong>${escapeHtml(team.pointDifference??"-")}</strong></div>
+      <div class="stat-box"><span>試合数</span><strong>${escapeHtml(team.gamesPlayed??"-")}</strong></div>
     </div>
 
     <h2 class="section-title blue">GAME SCHEDULE</h2>
-
     <div class="detail-games">
-      ${games.length
-        ? games.map(gameCard).join("")
-        : `<div class="empty-message">このチームの試合情報はありません</div>`
-      }
+      ${games.length?games.map(gameCard).join(""):
+        `<div class="empty-message">このチームの試合情報はありません</div>`}
     </div>
   `;
 
   showPage("teamDetail");
 }
 
-function selectArea(area, button) {
-  currentArea = area;
-
-  document.querySelectorAll(".area-tabs button").forEach(b =>
-    b.classList.remove("active")
-  );
-
-  if (button) button.classList.add("active");
-
+function selectArea(area,button) {
+  currentArea=area;
+  document.querySelectorAll(".area-tabs button").forEach(b=>b.classList.remove("active"));
+  if(button) button.classList.add("active");
   renderStandings();
 }
 
+/* COMPARE FUNCTIONS */
+
+function getAllStandingsTeams() {
+  const standings=officialData.standings||{};
+  return [
+    ...(standings["東地区"]||[]),
+    ...(standings["西地区"]||[])
+  ];
+}
+
+function findStandingTeam(teamName) {
+  return getAllStandingsTeams().find(team=>team.team===teamName);
+}
+
+function getTeamArea(teamName) {
+  const standings=officialData.standings||{};
+  for(const [area,teams] of Object.entries(standings)) {
+    if((teams||[]).some(team=>team.team===teamName)) return area;
+  }
+  return "";
+}
+
+function initializeCompare() {
+  const teams=getAllStandingsTeams();
+  const selectA=document.getElementById("compareTeamA");
+  const selectB=document.getElementById("compareTeamB");
+
+  if(!teams.length) return;
+
+  const options=teams.map(team=>
+    `<option value="${escapeHtml(team.team)}">${escapeHtml(team.team)}</option>`
+  ).join("");
+
+  selectA.innerHTML=options;
+  selectB.innerHTML=options;
+
+  selectA.selectedIndex=0;
+  selectB.selectedIndex=teams.length>1?1:0;
+
+  renderCompare();
+}
+
+function getHeadToHead(teamA,teamB) {
+  const games=officialData.schedule||[];
+
+  return games.filter(game=>
+    isFinished(game) &&
+    (
+      (matchesTeam(game.home,teamA)&&matchesTeam(game.away,teamB)) ||
+      (matchesTeam(game.home,teamB)&&matchesTeam(game.away,teamA))
+    )
+  ).sort((a,b)=>{
+    const dateCompare=String(a.date||"").localeCompare(String(b.date||""));
+    if(dateCompare!==0) return dateCompare;
+    return String(gameTime(a)||"").localeCompare(String(gameTime(b)||""));
+  });
+}
+
+function getHeadToHeadRecord(games,teamA,teamB) {
+  let winsA=0;
+  let winsB=0;
+  let draws=0;
+
+  games.forEach(game=>{
+    const homeA=matchesTeam(game.home,teamA);
+    const scoreA=Number(homeA?game.homeScore:game.awayScore);
+    const scoreB=Number(homeA?game.awayScore:game.homeScore);
+
+    if(scoreA>scoreB) winsA++;
+    else if(scoreB>scoreA) winsB++;
+    else draws++;
+  });
+
+  return {winsA,winsB,draws};
+}
+
+function displayStat(value) {
+  return value===null||value===undefined||value===""?"-":escapeHtml(value);
+}
+
+function compareNumber(value) {
+  if(value===null||value===undefined||value==="") return null;
+  const number=Number(String(value).replace(/,/g,"").replace("%",""));
+  return Number.isFinite(number)?number:null;
+}
+
+function renderCompare() {
+  if(!officialData) return;
+
+  const teamA=document.getElementById("compareTeamA").value;
+  const teamB=document.getElementById("compareTeamB").value;
+  const container=document.getElementById("compareContent");
+
+  if(!teamA||!teamB) {
+    container.innerHTML=`<div class="empty-message">比較するチームを選択してください</div>`;
+    return;
+  }
+
+  if(teamA===teamB) {
+    container.innerHTML=`<div class="empty-message">異なるチームを2つ選択してください。</div>`;
+    return;
+  }
+
+  const a=findStandingTeam(teamA);
+  const b=findStandingTeam(teamB);
+
+  if(!a||!b) {
+    container.innerHTML=`<div class="empty-message">チーム成績を取得できませんでした。</div>`;
+    return;
+  }
+
+  const metrics=[
+    {label:"順位",key:"rank",unit:"位",lower:true},
+    {label:"勝利数",key:"wins",unit:"勝",lower:false},
+    {label:"敗戦数",key:"losses",unit:"敗",lower:true},
+    {label:"勝率",key:"winRate",unit:"",lower:false},
+    {label:"総得点",key:"points",unit:"",lower:false},
+    {label:"総失点",key:"pointsAgainst",unit:"",lower:true},
+    {label:"得失点差",key:"pointDifference",unit:"",lower:false},
+    {label:"試合数",key:"gamesPlayed",unit:"試合",lower:false}
+  ];
+
+  const statsRows=metrics.map(metric=>{
+    const valueA=a[metric.key];
+    const valueB=b[metric.key];
+    const numberA=compareNumber(valueA);
+    const numberB=compareNumber(valueB);
+
+    let classA="";
+    let classB="";
+
+    if(numberA!==null&&numberB!==null&&numberA!==numberB) {
+      const aBetter=metric.lower?numberA<numberB:numberA>numberB;
+      classA=aBetter?"better":"";
+      classB=aBetter?"":"better";
+    }
+
+    return `
+      <tr>
+        <td>${metric.label}</td>
+        <td class="${classA}">${displayStat(valueA)}${metric.unit&&valueA!==undefined?metric.unit:""}</td>
+        <td class="${classB}">${displayStat(valueB)}${metric.unit&&valueB!==undefined?metric.unit:""}</td>
+      </tr>
+    `;
+  }).join("");
+
+  const headGames=getHeadToHead(teamA,teamB);
+  const record=getHeadToHeadRecord(headGames,teamA,teamB);
+
+  const resultsHtml=headGames.length
+    ?headGames.map(game=>{
+      const homeA=matchesTeam(game.home,teamA);
+      const scoreA=homeA?game.homeScore:game.awayScore;
+      const scoreB=homeA?game.awayScore:game.homeScore;
+      const winner=Number(scoreA)>Number(scoreB)
+        ?teamA:Number(scoreB)>Number(scoreA)?teamB:"DRAW";
+
+      return `
+        <div class="compare-result">
+          <div class="card-date">📅 ${escapeHtml(game.date||"日付不明")}</div>
+          <div class="match">
+            <div class="match-team">
+              ${scheduleTeamLogo(game.home)}
+              <div>${escapeHtml(game.home)}</div>
+            </div>
+            <div class="score">${escapeHtml(game.homeScore)}
+              <span class="vs">-</span>
+              ${escapeHtml(game.awayScore)}
+            </div>
+            <div class="match-team">
+              ${scheduleTeamLogo(game.away)}
+              <div>${escapeHtml(game.away)}</div>
+            </div>
+          </div>
+          <div class="match-meta">
+            <span>${escapeHtml(gameVenue(game))}</span>
+            <span class="tag ${winner==="DRAW"?"scheduled":winner===teamA?"finished":"live"}">
+              ${winner==="DRAW"?"引き分け":escapeHtml(winner+" 勝利")}
+            </span>
+          </div>
+        </div>
+      `;
+    }).join("")
+    :`<div class="empty-message">今シーズンの直接対決はまだありません。</div>`;
+
+  container.innerHTML=`
+    <div class="compare-logos">
+      <div class="compare-club">
+        ${teamLogoHtml(teamA)}
+        <h3>${escapeHtml(teamA)}</h3>
+        <p>${escapeHtml(getTeamArea(teamA))}</p>
+      </div>
+      <div class="compare-vs">VS</div>
+      <div class="compare-club">
+        ${teamLogoHtml(teamB)}
+        <h3>${escapeHtml(teamB)}</h3>
+        <p>${escapeHtml(getTeamArea(teamB))}</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">TEAM STATS</h2>
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>${escapeHtml(getTeamAlias(teamA))}</th>
+            <th>${escapeHtml(getTeamAlias(teamB))}</th>
+          </tr>
+        </thead>
+        <tbody>${statsRows}</tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title blue">HEAD TO HEAD RECORD</h2>
+    <div class="compare-summary">
+      <div class="summary-box">
+        <span>${escapeHtml(getTeamAlias(teamA))} 勝利</span>
+        <strong>${record.winsA}</strong>
+      </div>
+      <div class="summary-box">
+        <span>直接対決数</span>
+        <strong>${headGames.length}</strong>
+      </div>
+      <div class="summary-box">
+        <span>${escapeHtml(getTeamAlias(teamB))} 勝利</span>
+        <strong>${record.winsB}</strong>
+      </div>
+    </div>
+
+    <div class="compare-note">
+      ※直接対決は、data.jsonに登録されている試合のうち、スコアが確定している試合を集計しています。<br>
+      ※成績比較の数値は順位データに登録されている値を使用しています。<br>
+      ※緑色の数値は、比較項目において相対的に優位な数値です。
+    </div>
+
+    <h2 class="section-title purple">HEAD TO HEAD RESULTS</h2>
+    <div>${resultsHtml}</div>
+  `;
+}
+
 function showLoadError() {
-  const message = `
+  const message=`
     <div class="error-message">
       データを読み込めませんでした。<br>
       data.json が同じフォルダにあるか確認してください。
-    </div>
-  `;
+    </div>`;
 
-  document.getElementById("homeGames").innerHTML = message;
-  document.getElementById("latestGames").innerHTML = message;
-  document.getElementById("scheduleGames").innerHTML = message;
-  document.getElementById("ranking").innerHTML =
+  document.getElementById("homeGames").innerHTML=message;
+  document.getElementById("latestGames").innerHTML=message;
+  document.getElementById("scheduleGames").innerHTML=message;
+  document.getElementById("ranking").innerHTML=
     `<tr><td colspan="9">データを読み込めませんでした</td></tr>`;
-  document.getElementById("eastTeams").innerHTML = message;
-  document.getElementById("westTeams").innerHTML = message;
+  document.getElementById("eastTeams").innerHTML=message;
+  document.getElementById("westTeams").innerHTML=message;
+  document.getElementById("compareContent").innerHTML=message;
 }
 
 async function loadOfficialData() {
   try {
-    const response = await fetch("./data.json", {
-      cache: "no-store"
-    });
+    const response=await fetch("./data.json",{cache:"no-store"});
+    if(!response.ok) throw new Error("data.json の読み込みに失敗しました");
 
-    if (!response.ok) {
-      throw new Error("data.json の読み込みに失敗しました");
-    }
+    officialData=await response.json();
 
-    officialData = await response.json();
-
-    if (!officialData || !Array.isArray(officialData.schedule)) {
+    if(!officialData||!Array.isArray(officialData.schedule)) {
       throw new Error("data.json の形式が正しくありません");
     }
 
     renderSchedule();
     renderStandings();
     renderTeams();
+    initializeCompare();
 
-  } catch (error) {
+  } catch(error) {
     console.error(error);
     showLoadError();
   }
