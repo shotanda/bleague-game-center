@@ -7,7 +7,7 @@
 <title>B.LEAGUE GAME CENTER</title>
 
 <style>
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
 
 :root {
   --orange:#ff7139;
@@ -48,11 +48,7 @@ header {
   box-shadow:0 5px 18px rgba(255,113,57,.2);
 }
 
-.brand {
-  font-size:23px;
-  font-weight:1000;
-}
-
+.brand { font-size:23px;font-weight:1000; }
 .brand small {
   display:block;
   font-size:10px;
@@ -87,7 +83,7 @@ nav button {
   border:0;
   background:#f4f0e8;
   color:#6d7180;
-  padding:11px 17px;
+  padding:11px 15px;
   border-radius:30px;
   font-size:11px;
   font-weight:900;
@@ -104,7 +100,7 @@ main {
   margin:30px auto 70px;
 }
 
-.page { display:none; animation:fadeIn .25s ease; }
+.page { display:none;animation:fadeIn .25s ease; }
 .page.active { display:block; }
 
 @keyframes fadeIn {
@@ -521,18 +517,6 @@ tbody tr:hover {background:#fff1df}
   font-weight:800;
 }
 
-.back-button {
-  border:0;
-  background:var(--yellow);
-  color:var(--navy);
-  padding:10px 17px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:1000;
-  cursor:pointer;
-  margin-bottom:18px;
-}
-
 .detail-stats {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
@@ -584,6 +568,194 @@ tbody tr:hover {background:#fff1df}
   color:var(--muted);
   font-size:13px;
   font-weight:800;
+}
+
+/* CALENDAR */
+
+.calendar-panel {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.calendar-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.calendar-month {
+  font-size:25px;
+  font-weight:1000;
+  color:var(--navy);
+}
+
+.calendar-controls {
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.calendar-controls button {
+  border:0;
+  border-radius:11px;
+  padding:10px 13px;
+  background:#fff0e9;
+  color:var(--orange);
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.calendar-controls .today-button {
+  background:var(--yellow);
+  color:var(--navy);
+}
+
+.calendar-grid {
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:6px;
+}
+
+.calendar-weekday {
+  text-align:center;
+  font-size:11px;
+  font-weight:1000;
+  color:var(--muted);
+  padding:8px 0;
+}
+
+.calendar-weekday:first-child {color:#ef7777}
+.calendar-weekday:last-child {color:#549fc7}
+
+.calendar-day {
+  border:1px solid #f0ece4;
+  border-radius:13px;
+  min-height:82px;
+  padding:8px 5px;
+  background:#fffdf9;
+  color:var(--navy);
+  cursor:pointer;
+  text-align:center;
+  transition:.15s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+}
+
+.calendar-day:hover {
+  border-color:var(--orange);
+  background:#fff5ed;
+}
+
+.calendar-day.empty {
+  background:transparent;
+  border-color:transparent;
+  cursor:default;
+}
+
+.calendar-day.selected {
+  background:var(--orange);
+  color:white;
+  border-color:var(--orange);
+  box-shadow:0 5px 12px rgba(255,113,57,.2);
+}
+
+.calendar-day.today:not(.selected) {
+  border:2px solid var(--blue);
+}
+
+.calendar-day .day-number {
+  font-size:14px;
+  font-weight:1000;
+}
+
+.calendar-day .game-count {
+  font-size:9px;
+  font-weight:900;
+  color:#1688a8;
+  background:#e4f7fc;
+  border-radius:20px;
+  padding:3px 6px;
+}
+
+.calendar-day.selected .game-count {
+  color:var(--orange);
+  background:white;
+}
+
+.calendar-day .game-dots {
+  display:flex;
+  justify-content:center;
+  gap:3px;
+}
+
+.calendar-day .game-dots i {
+  display:block;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--orange);
+}
+
+.calendar-day.selected .game-dots i {background:white}
+
+.calendar-legend {
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:15px;
+  font-size:10px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+.calendar-legend span {
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.legend-dot {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  display:inline-block;
+  background:var(--orange);
+}
+
+.calendar-selected-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.calendar-selected-title h2 {
+  font-size:20px;
+  font-weight:1000;
+  color:var(--navy);
+  margin:0;
+}
+
+.calendar-selected-title span {
+  font-size:11px;
+  font-weight:900;
+  color:var(--muted);
+}
+
+.calendar-games {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:14px;
+  margin-top:16px;
 }
 
 /* COMPARE */
@@ -681,20 +853,13 @@ tbody tr:hover {background:#fff1df}
   margin:5px 0 0;
 }
 
-.compare-table {
-  min-width:500px;
-}
-
+.compare-table {min-width:500px}
 .compare-table th:first-child,
 .compare-table td:first-child {
   text-align:left;
   padding-left:18px;
 }
-
-.compare-table td {
-  font-size:13px;
-}
-
+.compare-table td {font-size:13px}
 .compare-table .better {
   color:#15965b;
   font-weight:1000;
@@ -745,14 +910,8 @@ tbody tr:hover {background:#fff1df}
   box-shadow:var(--shadow);
 }
 
-.compare-result .match-meta {
-  justify-content:center;
-}
-
-.compare-result .match {
-  max-width:500px;
-  margin:auto;
-}
+.compare-result .match-meta {justify-content:center}
+.compare-result .match {max-width:500px;margin:auto}
 
 .compare-note {
   font-size:11px;
@@ -808,6 +967,16 @@ footer {
   .summary-box {padding:13px 5px}
   .summary-box strong {font-size:19px}
   .summary-box span {font-size:9px}
+  .calendar-panel {padding:11px}
+  .calendar-header {gap:5px}
+  .calendar-month {font-size:19px}
+  .calendar-controls {gap:4px}
+  .calendar-controls button {padding:9px 8px;font-size:10px}
+  .calendar-grid {gap:3px}
+  .calendar-day {min-height:60px;padding:5px 2px;border-radius:9px}
+  .calendar-day .day-number {font-size:12px}
+  .calendar-day .game-count {font-size:8px;padding:2px 4px}
+  .calendar-day .game-dots i {width:5px;height:5px}
 }
 </style>
 </head>
@@ -825,6 +994,7 @@ footer {
 <nav>
   <button class="active" onclick="showPage('home',this)">HOME</button>
   <button onclick="showPage('schedule',this)">SCHEDULE / RESULT</button>
+  <button onclick="showPage('calendar',this)">CALENDAR</button>
   <button onclick="showPage('standings',this)">STANDINGS</button>
   <button onclick="showPage('teams',this)">TEAMS</button>
   <button onclick="showPage('compare',this)">COMPARE</button>
@@ -860,6 +1030,41 @@ footer {
   </div>
 
   <div id="scheduleGames" class="cards"></div>
+</section>
+
+<!-- CALENDAR -->
+<section id="calendar" class="page">
+  <div class="page-heading">
+    <h1>GAME CALENDAR</h1>
+    <p class="subtitle">カレンダーから試合日程をチェック</p>
+  </div>
+
+  <div class="calendar-panel">
+    <div class="calendar-header">
+      <div class="calendar-month" id="calendarMonth">2026年11月</div>
+      <div class="calendar-controls">
+        <button onclick="changeCalendarMonth(-1)">◀</button>
+        <button class="today-button" onclick="goCalendarToday()">今日</button>
+        <button onclick="changeCalendarMonth(1)">▶</button>
+      </div>
+    </div>
+
+    <div class="calendar-grid" id="calendarGrid"></div>
+
+    <div class="calendar-legend">
+      <span><i class="legend-dot"></i> 試合あり</span>
+      <span>青枠：今日</span>
+      <span>オレンジ：選択中</span>
+    </div>
+  </div>
+
+  <h2 class="section-title blue">SELECTED DAY</h2>
+  <div class="calendar-selected-title">
+    <h2 id="selectedDateTitle">日付を選択してください</h2>
+    <span id="selectedGameCount"></span>
+  </div>
+
+  <div id="calendarGames" class="calendar-games"></div>
 </section>
 
 <section id="standings" class="page">
@@ -907,7 +1112,6 @@ footer {
   <div id="teamDetailContent"></div>
 </section>
 
-<!-- COMPARE -->
 <section id="compare" class="page">
   <div class="page-heading">
     <h1>TEAM COMPARISON</h1>
@@ -924,9 +1128,7 @@ footer {
       <label>TEAM A</label>
       <select id="compareTeamA" class="compare-select" onchange="renderCompare()"></select>
     </div>
-
     <div class="compare-vs">VS</div>
-
     <div class="compare-team-picker">
       <label>TEAM B</label>
       <select id="compareTeamB" class="compare-select" onchange="renderCompare()"></select>
@@ -944,6 +1146,11 @@ footer {
 let officialData = null;
 let currentArea = "東地区";
 let lastMainPage = "teams";
+
+const today = new Date();
+let calendarYear = today.getFullYear();
+let calendarMonth = today.getMonth();
+let selectedCalendarDate = formatLocalDate(today);
 
 const teamInfo = {
 "仙台89ERS":{alias:"仙台",logo:"https://bleague.bl.kuroco-img.app/v=1783544480/files/user/common/img/logo/2026/s/se.png"},
@@ -980,6 +1187,23 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function formatLocalDate(date) {
+  const y=date.getFullYear();
+  const m=String(date.getMonth()+1).padStart(2,"0");
+  const d=String(date.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
+
+function normalizeDate(value) {
+  if(!value) return "";
+  const text=String(value).trim();
+  const match=text.match(/^(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?$/);
+  if(match) {
+    return `${match[1]}-${String(match[2]).padStart(2,"0")}-${String(match[3]).padStart(2,"0")}`;
+  }
+  return text;
+}
+
 function teamLogoHtml(teamName,large=false) {
   const info=teamInfo[teamName];
   if(!info?.logo) return "";
@@ -1003,8 +1227,8 @@ function matchesTeam(scheduleName,officialName) {
 
 function sortGames(games) {
   return [...games].sort((a,b)=>{
-    const dateA=String(a.date||"");
-    const dateB=String(b.date||"");
+    const dateA=normalizeDate(a.date);
+    const dateB=normalizeDate(b.date);
     if(dateA!==dateB) return dateA.localeCompare(dateB);
     return String(gameTime(a)||"99:99").localeCompare(String(gameTime(b)||"99:99"));
   });
@@ -1026,6 +1250,7 @@ function showPage(page,button) {
 
   if(page!=="teamDetail") lastMainPage=page;
   if(page==="compare" && officialData) renderCompare();
+  if(page==="calendar" && officialData) renderCalendar();
 }
 
 function goBackToList() {
@@ -1102,17 +1327,16 @@ function gameCard(g) {
 
 function renderSchedule() {
   const games=sortGames(officialData.schedule||[]);
-  const today=new Date();
-  const todayText=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+  const todayText=formatLocalDate(new Date());
 
-  const todayGames=games.filter(g=>g.date===todayText);
+  const todayGames=games.filter(g=>normalizeDate(g.date)===todayText);
   document.getElementById("homeGames").innerHTML=todayGames.length
     ?todayGames.map(gameCard).join("")
     :`<div class="empty-message">本日の試合はありません 🏀</div>`;
 
   const latestGames=games.filter(isFinished)
     .sort((a,b)=>{
-      const dateCompare=String(b.date||"").localeCompare(String(a.date||""));
+      const dateCompare=normalizeDate(b.date).localeCompare(normalizeDate(a.date));
       if(dateCompare!==0) return dateCompare;
       return String(gameTime(b)||"").localeCompare(String(gameTime(a)||""));
     }).slice(0,5);
@@ -1123,7 +1347,7 @@ function renderSchedule() {
 
   const dateFilter=document.getElementById("dateFilter");
   const selectedDate=dateFilter.value;
-  const dates=[...new Set(games.map(g=>g.date).filter(Boolean))].sort();
+  const dates=[...new Set(games.map(g=>normalizeDate(g.date)).filter(Boolean))].sort();
 
   dateFilter.innerHTML=`<option value="">すべての日程</option>`+
     dates.map(date=>`<option value="${escapeHtml(date)}">${escapeHtml(date)}</option>`).join("");
@@ -1134,7 +1358,7 @@ function renderSchedule() {
 
 function renderScheduleList(games) {
   const selectedDate=document.getElementById("dateFilter")?.value||"";
-  const filtered=selectedDate?games.filter(g=>g.date===selectedDate):games;
+  const filtered=selectedDate?games.filter(g=>normalizeDate(g.date)===selectedDate):games;
 
   document.getElementById("scheduleGames").innerHTML=filtered.length
     ?filtered.map(gameCard).join("")
@@ -1270,6 +1494,134 @@ function selectArea(area,button) {
   renderStandings();
 }
 
+/* CALENDAR FUNCTIONS */
+
+function getGamesForDate(dateText) {
+  return (officialData?.schedule||[]).filter(game=>
+    normalizeDate(game.date)===dateText
+  );
+}
+
+function renderCalendar() {
+  if(!officialData) return;
+
+  const grid=document.getElementById("calendarGrid");
+  const monthLabel=document.getElementById("calendarMonth");
+
+  const firstDay=new Date(calendarYear,calendarMonth,1);
+  const lastDate=new Date(calendarYear,calendarMonth+1,0).getDate();
+  const startWeekday=firstDay.getDay();
+
+  monthLabel.textContent=`${calendarYear}年${calendarMonth+1}月`;
+
+  const weekdays=["日","月","火","水","木","金","土"];
+  let html=weekdays.map(day=>
+    `<div class="calendar-weekday">${day}</div>`
+  ).join("");
+
+  for(let i=0;i<startWeekday;i++) {
+    html+=`<div class="calendar-day empty"></div>`;
+  }
+
+  const todayText=formatLocalDate(new Date());
+
+  for(let day=1;day<=lastDate;day++) {
+    const dateText=`${calendarYear}-${String(calendarMonth+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+    const games=getGamesForDate(dateText);
+    const isSelected=dateText===selectedCalendarDate;
+    const isToday=dateText===todayText;
+
+    const classes=[
+      "calendar-day",
+      isSelected?"selected":"",
+      isToday?"today":""
+    ].filter(Boolean).join(" ");
+
+    const dots=games.length
+      ?`<div class="game-dots">${Array.from({length:Math.min(games.length,4)},()=>"<i></i>").join("")}</div>`
+      :"";
+
+    const count=games.length
+      ?`<span class="game-count">${games.length}試合</span>`
+      :"";
+
+    html+=`
+      <button class="${classes}" onclick="selectCalendarDate('${dateText}')">
+        <span class="day-number">${day}</span>
+        ${dots}
+        ${count}
+      </button>
+    `;
+  }
+
+  const totalCells=startWeekday+lastDate;
+  const trailing=(7-totalCells%7)%7;
+
+  for(let i=0;i<trailing;i++) {
+    html+=`<div class="calendar-day empty"></div>`;
+  }
+
+  grid.innerHTML=html;
+  renderCalendarGames();
+}
+
+function changeCalendarMonth(amount) {
+  calendarMonth+=amount;
+
+  if(calendarMonth<0) {
+    calendarMonth=11;
+    calendarYear--;
+  } else if(calendarMonth>11) {
+    calendarMonth=0;
+    calendarYear++;
+  }
+
+  renderCalendar();
+}
+
+function goCalendarToday() {
+  const now=new Date();
+  calendarYear=now.getFullYear();
+  calendarMonth=now.getMonth();
+  selectedCalendarDate=formatLocalDate(now);
+  renderCalendar();
+}
+
+function selectCalendarDate(dateText) {
+  selectedCalendarDate=dateText;
+
+  const [year,month]=dateText.split("-").map(Number);
+  calendarYear=year;
+  calendarMonth=month-1;
+
+  renderCalendar();
+}
+
+function renderCalendarGames() {
+  const games=sortGames(getGamesForDate(selectedCalendarDate));
+  const title=document.getElementById("selectedDateTitle");
+  const count=document.getElementById("selectedGameCount");
+  const container=document.getElementById("calendarGames");
+
+  if(!selectedCalendarDate) {
+    title.textContent="日付を選択してください";
+    count.textContent="";
+    container.innerHTML=`<div class="empty-message">カレンダーの日付を押してください</div>`;
+    return;
+  }
+
+  const [year,month,day]=selectedCalendarDate.split("-").map(Number);
+  const date=new Date(year,month-1,day);
+  const weekday=["日","月","火","水","木","金","土"][date.getDay()];
+
+  title.textContent=`${month}月${day}日（${weekday}）の試合`;
+  count.textContent=`${games.length}試合`;
+
+  container.innerHTML=games.length
+    ?games.map(gameCard).join("")
+    :`<div class="empty-message">この日の試合はありません 🏀</div>`;
+}
+
 /* COMPARE FUNCTIONS */
 
 function getAllStandingsTeams() {
@@ -1322,7 +1674,7 @@ function getHeadToHead(teamA,teamB) {
       (matchesTeam(game.home,teamB)&&matchesTeam(game.away,teamA))
     )
   ).sort((a,b)=>{
-    const dateCompare=String(a.date||"").localeCompare(String(b.date||""));
+    const dateCompare=normalizeDate(a.date).localeCompare(normalizeDate(b.date));
     if(dateCompare!==0) return dateCompare;
     return String(gameTime(a)||"").localeCompare(String(gameTime(b)||""));
   });
@@ -1502,8 +1854,7 @@ function renderCompare() {
 
     <div class="compare-note">
       ※直接対決は、data.jsonに登録されている試合のうち、スコアが確定している試合を集計しています。<br>
-      ※成績比較の数値は順位データに登録されている値を使用しています。<br>
-      ※緑色の数値は、比較項目において相対的に優位な数値です。
+      ※成績比較の数値は順位データに登録されている値を使用しています。
     </div>
 
     <h2 class="section-title purple">HEAD TO HEAD RESULTS</h2>
@@ -1526,6 +1877,7 @@ function showLoadError() {
   document.getElementById("eastTeams").innerHTML=message;
   document.getElementById("westTeams").innerHTML=message;
   document.getElementById("compareContent").innerHTML=message;
+  document.getElementById("calendarGames").innerHTML=message;
 }
 
 async function loadOfficialData() {
@@ -1543,6 +1895,7 @@ async function loadOfficialData() {
     renderStandings();
     renderTeams();
     initializeCompare();
+    renderCalendar();
 
   } catch(error) {
     console.error(error);
