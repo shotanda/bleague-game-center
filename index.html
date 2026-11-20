@@ -154,13 +154,28 @@ footer {
   </section>
 
   <section id="standings" class="page">
-    <h1>STANDINGS</h1>
-    <p class="subtitle">リーグ順位表</p>
-    <table>
-      <thead><tr><th>RANK</th><th>TEAM</th><th>WIN</th><th>LOSE</th><th>勝率</th></tr></thead>
-      <tbody id="ranking"></tbody>
-    </table>
-  </section>
+  <h1>STANDINGS</h1>
+  <p class="subtitle">B.PREMIER · 2026-27</p>
+
+  <div id="areaTabs" class="league">
+    <button class="active" onclick="selectArea('東地区',this)">東地区</button>
+    <button onclick="selectArea('西地区',this)">西地区</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>RANK</th>
+        <th>TEAM</th>
+        <th>WIN</th>
+        <th>LOSE</th>
+        <th>勝率</th>
+        <th>得失点差</th>
+      </tr>
+    </thead>
+    <tbody id="ranking"></tbody>
+  </table>
+</section>
 
   <section id="teams" class="page">
     <h1>TEAMS</h1>
@@ -174,95 +189,117 @@ footer {
 </footer>
 
 <script>
-const data = {
-  "B.PREMIER": {
-    teams: ["千葉ジェッツ","アルバルク東京","宇都宮ブレックス","琉球ゴールデンキングス","横浜ビー・コルセアーズ"],
-    games: [
-      {date:"2026/11/20",home:"千葉ジェッツ",away:"アルバルク東京",hs:82,as:76,status:"試合終了"},
-      {date:"2026/11/20",home:"宇都宮ブレックス",away:"琉球ゴールデンキングス",hs:0,as:0,status:"試合前"},
-      {date:"2026/11/21",home:"横浜ビー・コルセアーズ",away:"千葉ジェッツ",hs:0,as:0,status:"試合前"}
-    ],
-    standings: [
-      ["千葉ジェッツ",10,2,".833"],
-      ["宇都宮ブレックス",9,3,".750"],
-      ["アルバルク東京",8,4,".667"],
-      ["琉球ゴールデンキングス",7,5,".583"],
-      ["横浜ビー・コルセアーズ",5,7,".417"]
-    ]
-  },
-  "B.ONE": {
-    teams:["福島ファイヤーボンズ","信州ブレイブウォリアーズ","熊本ヴォルターズ","愛媛オレンジバイキングス"],
-    games:[
-      {date:"2026/11/20",home:"福島ファイヤーボンズ",away:"信州ブレイブウォリアーズ",hs:78,as:70,status:"試合終了"},
-      {date:"2026/11/21",home:"熊本ヴォルターズ",away:"愛媛オレンジバイキングス",hs:0,as:0,status:"試合前"}
-    ],
-    standings:[
-      ["福島ファイヤーボンズ",9,3,".750"],
-      ["信州ブレイブウォリアーズ",8,4,".667"],
-      ["熊本ヴォルターズ",6,6,".500"],
-      ["愛媛オレンジバイキングス",4,8,".333"]
-    ]
-  },
-  "B.NEXT": {
-    teams:["クラブA","クラブB","クラブC"],
-    games:[
-      {date:"2026/11/20",home:"クラブA",away:"クラブB",hs:0,as:0,status:"試合前"}
-    ],
-    standings:[
-      ["クラブA",5,2,".714"],
-      ["クラブB",4,3,".571"],
-      ["クラブC",2,5,".286"]
-    ]
-  }
-};
 
-let currentLeague = "B.PREMIER";
+let officialData = null;
+let currentArea = "東地区";
 
 function gameCard(g) {
-  const score = g.status === "試合終了" || g.status === "LIVE";
+  const venue = g.info?.[2] || "";
+  const time = g.info?.[3] || "";
+
   return `
     <div class="card">
-      <div class="tag">${g.date} · ${currentLeague}</div>
+      <div class="tag">B.PREMIER · 2026-27</div>
       <div class="match">
         <div class="team">${g.home}</div>
-        <div class="score">${score ? g.hs+" - "+g.as : "VS"}</div>
+        <div class="score">VS</div>
         <div class="team">${g.away}</div>
       </div>
-      <div class="status">${g.status}</div>
+      <div class="status">${venue} ${time}</div>
+      <a href="${g.detail}" target="_blank" rel="noopener">
+        公式試合詳細を見る
+      </a>
     </div>`;
 }
 
-function render() {
-  const d = data[currentLeague];
+function renderSchedule() {
+  const games = officialData.schedule || [];
+
   document.getElementById("homeGames").innerHTML =
-    d.games.filter(g=>g.date==="2026/11/20").map(gameCard).join("") || "<p>試合はありません</p>";
-  document.getElementById("latestGames").innerHTML =
-    d.games.filter(g=>g.status==="試合終了").map(gameCard).join("") || "<p>試合結果はありません</p>";
+    games.map(gameCard).join("") || "<p>試合情報がありません</p>";
+
   document.getElementById("scheduleGames").innerHTML =
-    d.games.map(gameCard).join("");
+    games.map(gameCard).join("") || "<p>試合情報がありません</p>";
+
+  document.getElementById("latestGames").innerHTML =
+    "<p>試合結果の取得は次の段階で対応します。</p>";
+}
+
+function renderStandings() {
+  const teams = officialData.standings[currentArea] || [];
+
   document.getElementById("ranking").innerHTML =
-    d.standings.map((t,i)=>`
-      <tr><td class="rank">${i+1}</td><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td><td>${t[3]}</td></tr>
+    teams.map(t => `
+      <tr>
+        <td class="rank">${t.rank}</td>
+        <td>${t.team}</td>
+        <td>${t.wins}</td>
+        <td>${t.losses}</td>
+        <td>${t.winRate}</td>
+        <td>${t.pointDifference}</td>
+      </tr>
     `).join("");
+}
+
+function renderTeams() {
+  const east = officialData.standings["東地区"] || [];
+  const west = officialData.standings["西地区"] || [];
+  const teams = [...east, ...west];
+
   document.getElementById("teamList").innerHTML =
-    d.teams.map(t=>`<div class="team-card">${t}<small>${currentLeague}</small></div>`).join("");
+    teams.map(t => `
+      <div class="team-card">
+        ${t.team}
+        <small>B.PREMIER · ${t.rank}位</small>
+      </div>
+    `).join("");
 }
 
-function selectLeague(league,button) {
-  currentLeague = league;
-  document.querySelectorAll(".league button").forEach(b=>b.classList.remove("active"));
+function selectArea(area, button) {
+  currentArea = area;
+
+  document.querySelectorAll("#areaTabs button")
+    .forEach(b => b.classList.remove("active"));
+
   button.classList.add("active");
-  render();
+  renderStandings();
 }
 
-function showPage(page,button) {
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(page).classList.add("active");
-  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
+async function loadOfficialData() {
+  try {
+    const response = await fetch("./data.json");
+
+    if (!response.ok) {
+      throw new Error("data.jsonを読み込めませんでした");
+    }
+
+    officialData = await response.json();
+
+    renderSchedule();
+    renderStandings();
+    renderTeams();
+
+    console.log("公式データの読み込みに成功しました");
+
+  } catch (error) {
+    console.error(error);
+
+    document.getElementById("homeGames").innerHTML =
+      "<p>データを読み込めませんでした。</p>";
+
+    document.getElementById("ranking").innerHTML =
+      "<tr><td colspan='6'>データを読み込めませんでした。</td></tr>";
+  }
 }
 
-render();
+document.querySelectorAll(".league").forEach(el => {
+  if (el.id !== "areaTabs") {
+    el.remove();
+  }
+});
+
+loadOfficialData();
+
 </script>
 </body>
 </html>
