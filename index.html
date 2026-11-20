@@ -1535,6 +1535,142 @@ function openTeamDetail(encodedName) {
     matchesTeam(g.home,teamName)||matchesTeam(g.away,teamName)
   );
 
+  const byTeam=getAnalyticsByTeam();
+  const alias=getTeamAlias(teamName);
+  const teamAnalytics=byTeam?.[alias]||byTeam?.[teamName]||null;
+
+  // 1. 休養日数別ミニ表HTML
+  const restOrder=["中0日(連戦)","中1日","中2日","中3〜4日","中5日以上","開幕戦/初戦"];
+  const restByMap=teamAnalytics?.byRestDays||{};
+
+  const restRowsHtml=restOrder.map(key=>{
+    const stat=restByMap[key];
+    const gCount=Number(stat?.games||0);
+    if(!stat||gCount===0) {
+      return `
+        <tr>
+          <td><strong>${escapeHtml(key)}</strong></td>
+          <td>0</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      `;
+    }
+    const wins=Number(stat.wins||0);
+    const losses=Number(stat.losses||0);
+    const winRatePct=`${(Number(stat.winRate||0)*100).toFixed(1)}%`;
+    const avgPf=Number(stat.avgPointsFor||0).toFixed(1);
+    const avgPa=Number(stat.avgPointsAgainst||0).toFixed(1);
+    const diffNum=Number(stat.avgPointDiff||0);
+    const diffText=`${diffNum>0?"+":""}${diffNum.toFixed(1)}`;
+
+    return `
+      <tr>
+        <td><strong>${escapeHtml(key)}</strong></td>
+        <td>${gCount}</td>
+        <td>${wins}勝 ${losses}敗</td>
+        <td><strong>${winRatePct}</strong></td>
+        <td>${avgPf}</td>
+        <td>${avgPa}</td>
+        <td>${diffText}</td>
+      </tr>
+    `;
+  }).join("");
+
+  const restSectionHtml=`
+    <h2 class="section-title yellow">REST DAYS BREAKDOWN</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>休養区分</th>
+            <th>試合数</th>
+            <th>勝敗</th>
+            <th>勝率</th>
+            <th>平均得点</th>
+            <th>平均失点</th>
+            <th>平均得失点差</th>
+          </tr>
+        </thead>
+        <tbody>${restRowsHtml}</tbody>
+      </table>
+    </div>
+  `;
+
+  // 2. 対戦相手別相性表HTML
+  const vsMap=teamAnalytics?.vsOpponent||{};
+  const vsEntries=Object.entries(vsMap)
+    .map(([oppAlias,stat])=>{
+      const officialOpp=findOfficialTeam(oppAlias)||oppAlias;
+      return {
+        oppAlias,
+        officialOpp,
+        games:Number(stat?.games||0),
+        wins:Number(stat?.wins||0),
+        losses:Number(stat?.losses||0),
+        winRate:Number(stat?.winRate||0),
+        avgPointsFor:Number(stat?.avgPointsFor||0),
+        avgPointsAgainst:Number(stat?.avgPointsAgainst||0),
+        avgPointDiff:Number(stat?.avgPointDiff||0)
+      };
+    })
+    .filter(item=>item.games>0)
+    .sort((a,b)=>{
+      if(b.winRate!==a.winRate) return b.winRate-a.winRate;
+      return b.avgPointDiff-a.avgPointDiff;
+    });
+
+  const vsSectionHtml=vsEntries.length?`
+    <h2 class="section-title purple">VS OPPONENT</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>対戦相手</th>
+            <th>試合数</th>
+            <th>勝敗</th>
+            <th>勝率</th>
+            <th>平均得点</th>
+            <th>平均失点</th>
+            <th>平均得失点差</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${vsEntries.map(opp=>{
+            const diffText=`${opp.avgPointDiff>0?"+":""}${opp.avgPointDiff.toFixed(1)}`;
+            const canOpenDetail=Boolean(teamInfo[opp.officialOpp]);
+            const oppCell=canOpenDetail
+              ? `<button class="team-link" onclick="openTeamDetail('${encodeURIComponent(opp.officialOpp)}')">${escapeHtml(opp.officialOpp)}</button>`
+              : `<strong>${escapeHtml(opp.oppAlias)}</strong>`;
+
+            return `
+              <tr>
+                <td>
+                  <div class="standings-team">
+                    ${teamLogoHtml(opp.officialOpp)}
+                    ${oppCell}
+                  </div>
+                </td>
+                <td>${opp.games}</td>
+                <td>${opp.wins}勝 ${opp.losses}敗</td>
+                <td><strong>${(opp.winRate*100).toFixed(1)}%</strong></td>
+                <td>${opp.avgPointsFor.toFixed(1)}</td>
+                <td>${opp.avgPointsAgainst.toFixed(1)}</td>
+                <td>${diffText}</td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `:`
+    <h2 class="section-title purple">VS OPPONENT</h2>
+    <div class="empty-message">対戦相手別の集計データはまだありません</div>
+  `;
+
   document.getElementById("teamDetailContent").innerHTML=`
     <div class="team-detail-header">
       ${teamLogoHtml(teamName,true)}
@@ -1554,6 +1690,9 @@ function openTeamDetail(encodedName) {
       <div class="stat-box"><span>得失点差</span><strong>${escapeHtml(team.pointDifference??"-")}</strong></div>
       <div class="stat-box"><span>試合数</span><strong>${escapeHtml(team.gamesPlayed??"-")}</strong></div>
     </div>
+
+    ${restSectionHtml}
+    ${vsSectionHtml}
 
     <h2 class="section-title blue">GAME SCHEDULE</h2>
     <div class="detail-games">
